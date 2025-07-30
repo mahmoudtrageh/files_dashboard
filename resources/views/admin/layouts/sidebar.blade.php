@@ -121,10 +121,10 @@
                             <i class="fas fa-cog ml-2 w-5 text-center text-gray-400"></i>
                             الاعدادات
                         </a>
-                        <a href="{{ route('admin.media.index') }}" class="flex items-center px-4 py-2 text-sm rounded-lg text-gray-700 hover:bg-gray-100 transition-all duration-200">
+                        {{-- <a href="{{ route('admin.media.index') }}" class="flex items-center px-4 py-2 text-sm rounded-lg text-gray-700 hover:bg-gray-100 transition-all duration-200">
                             <i class="fa-regular fa-square-plus ml-2 w-5 text-center text-gray-400"></i>
                             مدير الملفات
-                        </a>
+                        </a> --}}
                     </div>
                 </div>
 

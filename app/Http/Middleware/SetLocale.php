@@ -61,7 +61,7 @@ class SetLocale
         }
 
         // 5. Fall back to default
-        return config('app.locale', 'en');
+        return config('app.locale', 'ar');
     }
 
     /**
