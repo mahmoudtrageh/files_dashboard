@@ -30,6 +30,38 @@
 
     <!-- Stats Cards -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+         <div class="bg-white rounded-xl p-5 shadow-card border border-gray-100 hover:shadow-card-hover transition-all duration-300">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <h3 class="text-sm font-medium text-gray-500">الملفات</h3>
+                    <p class="text-2xl font-bold text-gray-900 mt-1">{{ getFilesCount() }}</p>
+                </div>
+                <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center">
+                    <i class="fas fa-file text-blue-600"></i>
+                </div>
+            </div>
+            {{-- <div class="flex items-center text-sm text-green-600">
+                <i class="fas fa-arrow-up ml-1"></i>
+                <span>زيادة 32% من الشهر الماضي</span>
+            </div> --}}
+        </div>
+
+         <div class="bg-white rounded-xl p-5 shadow-card border border-gray-100 hover:shadow-card-hover transition-all duration-300">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <h3 class="text-sm font-medium text-gray-500">الأقسام</h3>
+                    <p class="text-2xl font-bold text-gray-900 mt-1">{{ getCategoriesCount() }}</p>
+                </div>
+                <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center">
+                    <i class="fas fa-list text-blue-600"></i>
+                </div>
+            </div>
+            {{-- <div class="flex items-center text-sm text-green-600">
+                <i class="fas fa-arrow-up ml-1"></i>
+                <span>زيادة 32% من الشهر الماضي</span>
+            </div> --}}
+        </div>
+
         <!-- Revenue Card -->
         <div class="bg-white rounded-xl p-5 shadow-card border border-gray-100 hover:shadow-card-hover transition-all duration-300">
             <div class="flex justify-between items-start mb-4">
@@ -46,7 +78,7 @@
                 <span>زيادة 32% من الشهر الماضي</span>
             </div> --}}
         </div>
-        
+
         <!-- Customers Card -->
         <div class="bg-white rounded-xl p-5 shadow-card border border-gray-100 hover:shadow-card-hover transition-all duration-300">
             <div class="flex justify-between items-start mb-4">
@@ -63,7 +95,7 @@
                 <span>انخفاض 3% من الشهر الماضي</span>
             </div> --}}
         </div>
-        
+
         <!-- Orders Card -->
         <div class="bg-white rounded-xl p-5 shadow-card border border-gray-100 hover:shadow-card-hover transition-all duration-300">
             <div class="flex justify-between items-start mb-4">
@@ -80,7 +112,7 @@
                 <span>زيادة 7% من الشهر الماضي</span>
             </div> --}}
         </div>
-        
+
         <!-- Products Card -->
         {{-- <div class="bg-white rounded-xl p-5 shadow-card border border-gray-100 hover:shadow-card-hover transition-all duration-300">
             <div class="flex justify-between items-start mb-4">
@@ -391,7 +423,7 @@
                 <a href="#" class="text-primary-600 hover:text-primary-700 text-sm font-medium">عرض كل الأنشطة &leftarrow;</a>
             </div>
         </div>
-        
+
         <!-- Quick Actions -->
         <div class="bg-white rounded-xl shadow-card border border-gray-100 overflow-hidden">
             <div class="px-6 py-4 border-b border-gray-100">

@@ -27,7 +27,7 @@ class CategoryController extends Controller
     public function index(): View
     {
         if (!auth()->guard('admin')->user()->can('category.view')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, trans('files.unauthorized_action'));
         }
 
         $statistics = $this->categoryService->getCategoryStatistics();
@@ -41,7 +41,7 @@ class CategoryController extends Controller
     public function create(): View
     {
         if (!auth()->guard('admin')->user()->can('category.create')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, trans('files.unauthorized_action'));
         }
 
         $categories = $this->categoryService->getCategoriesForSelect();
@@ -58,7 +58,7 @@ class CategoryController extends Controller
             $this->categoryService->createCategory($request->validated());
 
             return redirect()->route('admin.categories.index')
-                ->with('success', __('Category created successfully'));
+                ->with('success', trans('files.category_created'));
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage())->withInput();
         }
@@ -70,7 +70,7 @@ class CategoryController extends Controller
     public function show(Category $category): View
     {
         if (!auth()->guard('admin')->user()->can('category.view')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, trans('files.unauthorized_action'));
         }
 
         $category->load(['parent', 'children', 'files']);
@@ -85,7 +85,7 @@ class CategoryController extends Controller
     public function edit(Category $category): View
     {
         if (!auth()->guard('admin')->user()->can('category.edit')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, trans('files.unauthorized_action'));
         }
 
         $categories = $this->categoryService->getCategoriesForSelect();
@@ -102,7 +102,7 @@ class CategoryController extends Controller
             $this->categoryService->updateCategory($category, $request->validated());
 
             return redirect()->route('admin.categories.index')
-                ->with('success', __('Category updated successfully'));
+                ->with('success', trans('files.category_updated'));
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage())->withInput();
         }
@@ -114,14 +114,14 @@ class CategoryController extends Controller
     public function destroy(Category $category): RedirectResponse
     {
         if (!auth()->guard('admin')->user()->can('category.delete')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, trans('files.unauthorized_action'));
         }
 
         try {
             $this->categoryService->deleteCategory($category);
 
             return redirect()->route('admin.categories.index')
-                ->with('success', __('Category deleted successfully'));
+                ->with('success', trans('files.category_deleted'));
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -133,7 +133,7 @@ class CategoryController extends Controller
     public function search($query = null): JsonResponse
     {
         if (!auth()->guard('admin')->user()->can('category.view')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, trans('files.unauthorized_action'));
         }
 
         $categories = $this->categoryService->searchCategories($query ?? '');
@@ -147,7 +147,7 @@ class CategoryController extends Controller
     public function tree(): JsonResponse
     {
         if (!auth()->guard('admin')->user()->can('category.view')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, trans('files.unauthorized_action'));
         }
 
         $tree = $this->categoryService->getCategoryTree();
@@ -161,7 +161,7 @@ class CategoryController extends Controller
     public function reorder(Request $request): JsonResponse
     {
         if (!auth()->guard('admin')->user()->can('category.edit')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, trans('files.unauthorized_action'));
         }
 
         $request->validate([
@@ -174,7 +174,7 @@ class CategoryController extends Controller
         try {
             $this->categoryService->reorderCategories($request->categories);
 
-            return response()->json(['success' => true, 'message' => __('Categories reordered successfully')]);
+            return response()->json(['success' => true, 'message' => trans('files.categories_reordered')]);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 400);
         }

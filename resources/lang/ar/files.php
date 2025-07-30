@@ -39,10 +39,15 @@ return [
     'update' => 'تحديث',
     'loading' => 'جاري التحميل...',
     'no_data' => 'لا توجد بيانات متاحة',
+    'optional' => 'اختياري',
+    'required' => 'مطلوب',
+    'creating' => 'جاري الإنشاء',
+    'updating' => 'جاري التحديث',
 
     // File Management
     'file_management' => 'إدارة الملفات',
     'manage_files' => 'إدارة الملفات',
+    'manage_organize_files' => 'إدارة وتنظيم ملفاتك',
     'upload_file' => 'رفع ملف',
     'upload_files' => 'رفع الملفات',
     'select_file' => 'اختر ملف',
@@ -61,6 +66,7 @@ return [
     'file_name' => 'اسم الملف',
     'file_size' => 'حجم الملف',
     'file_type' => 'نوع الملف',
+    'file_types' => 'أنواع الملفات',
     'upload_date' => 'تاريخ الرفع',
     'last_modified' => 'آخر تعديل',
     'download_count' => 'عدد التحميلات',
@@ -89,20 +95,28 @@ return [
     // Categories
     'category_management' => 'إدارة الفئات',
     'manage_categories' => 'إدارة الفئات',
+    'organize_files' => 'تنظيم ملفاتك',
     'create_category' => 'إنشاء فئة',
+    'add_new_category' => 'إضافة فئة جديدة',
+    'add_new_category_description' => 'إنشاء فئة جديدة لتنظيم ملفاتك',
     'edit_category' => 'تعديل الفئة',
     'delete_category' => 'حذف الفئة',
     'category_name' => 'اسم الفئة',
     'category_description' => 'وصف الفئة',
+    'enter_category_name' => 'أدخل اسم الفئة',
+    'enter_category_description' => 'أدخل وصف الفئة (اختياري)',
+    'category_name_required' => 'اسم الفئة مطلوب',
     'parent_category' => 'الفئة الأصل',
     'root_category' => 'فئة جذرية',
     'no_parent' => 'بدون أصل (فئة جذرية)',
     'category_color' => 'لون الفئة',
     'category_icon' => 'أيقونة الفئة',
     'sort_order' => 'ترتيب الفرز',
+    'lower_numbers_appear_first' => 'الأرقام الأقل تظهر أولاً',
     'category_created' => 'تم إنشاء الفئة بنجاح',
     'category_updated' => 'تم تحديث الفئة بنجاح',
     'category_deleted' => 'تم حذف الفئة بنجاح',
+    'categories_reordered' => 'تم إعادة ترتيب الفئات بنجاح',
     'category_activated' => 'تم تفعيل الفئة',
     'category_deactivated' => 'تم إلغاء تفعيل الفئة',
     'categories_activated' => 'تم تفعيل الفئات المحددة',
@@ -121,6 +135,14 @@ return [
     'uncategorized' => 'غير مصنف',
     'files_count' => 'عدد الملفات',
     'total_files_count' => 'إجمالي الملفات (بما في ذلك الفئات الفرعية)',
+    'category_information' => 'معلومات الفئة',
+    'required_fields_marked' => 'الحقول المطلوبة مُعلّمة بـ *',
+    'hierarchy_settings' => 'إعدادات التسلسل الهرمي',
+    'appearance_settings' => 'إعدادات المظهر',
+    'additional_settings' => 'إعدادات إضافية',
+    'category_will_be_visible' => 'ستكون الفئة مرئية للمستخدمين',
+    'use_fontawesome_classes' => 'استخدم أسماء فئات FontAwesome',
+    'preview' => 'معاينة',
 
     // Views and Display
     'grid_view' => 'عرض شبكي',
@@ -131,6 +153,7 @@ return [
     'toggle_children' => 'تبديل الفروع',
     'expand_all' => 'توسيع الكل',
     'collapse_all' => 'طي الكل',
+    'file_manager' => 'مدير الملفات',
 
     // Search and Filters
     'search_files' => 'البحث في الملفات...',
@@ -142,6 +165,12 @@ return [
     'no_files_found' => 'لم يتم العثور على ملفات',
     'no_categories_found' => 'لم يتم العثور على فئات',
     'try_different_search' => 'جرب تعديل البحث أو المرشحات',
+    'upload_first_file' => 'ارفع ملفك الأول',
+    'showing_filtered_results' => 'عرض النتائج المُرشحة',
+    'showing' => 'عرض',
+    'to' => 'إلى',
+    'of' => 'من',
+    'results' => 'النتائج',
 
     // Bulk Actions
     'bulk_actions' => 'الإجراءات المجمعة',
@@ -155,13 +184,22 @@ return [
 
     // File Upload
     'drop_files_here' => 'اسقط الملفات هنا أو انقر للاستعراض',
+    'upload_a_file' => 'ارفع ملف',
+    'or_drag_and_drop' => 'أو اسحب وأفلت',
     'supported_formats' => 'الصيغ المدعومة',
+    'supported_formats_info' => 'جميع صيغ الملفات الشائعة مدعومة',
     'max_file_size' => 'أقصى حجم للملف',
     'uploading' => 'جاري الرفع...',
     'upload_complete' => 'اكتمل الرفع',
     'upload_error' => 'خطأ في الرفع',
     'file_title_required' => 'عنوان الملف مطلوب',
     'file_required' => 'يرجى اختيار ملف',
+    'enter_file_title' => 'أدخل عنوان الملف',
+    'enter_file_description' => 'أدخل وصف الملف (اختياري)',
+    'new_category_name' => 'اسم الفئة الجديدة',
+    'this_file_public' => 'جعل هذا الملف عام',
+    'public_files_accessible' => 'الملفات العامة متاحة لجميع المستخدمين',
+    'add' => 'إضافة',
 
     // Statistics
     'file_statistics' => 'إحصائيات الملفات',
@@ -192,15 +230,7 @@ return [
     'operation_successful' => 'تمت العملية بنجاح',
     'operation_failed' => 'فشلت العملية',
     'please_try_again' => 'يرجى المحاولة مرة أخرى',
-
-    // Form Labels and Placeholders
-    'enter_file_title' => 'أدخل عنوان الملف',
-    'enter_file_description' => 'أدخل وصف الملف (اختياري)',
-    'enter_category_name' => 'أدخل اسم الفئة',
-    'enter_category_description' => 'أدخل وصف الفئة (اختياري)',
-    'new_category_name' => 'اسم الفئة الجديدة',
-    'this_file_public' => 'جعل هذا الملف عام',
-    'category_active' => 'الفئة نشطة',
+    'unauthorized_action' => 'إجراء غير مصرح به.',
 
     // Colors and Icons
     'red' => 'أحمر',
@@ -234,4 +264,10 @@ return [
     'last_week' => 'الأسبوع الماضي',
     'this_month' => 'هذا الشهر',
     'last_month' => 'الشهر الماضي',
+
+    // Edit File
+    'edit_file' => 'تعديل الملف',
+
+    // Human readable sizes
+    'human_readable_size' => 'الحجم',
 ];

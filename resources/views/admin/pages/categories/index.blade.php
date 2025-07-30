@@ -61,7 +61,7 @@
                         </div>
                         <div>
                             <div class="font-medium text-gray-900">{{ $category->name }}</div>
-                            <div class="text-sm text-gray-500">{{ $category->files_count }} {{ __('files') }}</div>
+                            <div class="text-sm text-gray-500">{{ $category->files_count }} {{ __('files.files') }}</div>
                         </div>
                     </div>
                     <div class="text-right">

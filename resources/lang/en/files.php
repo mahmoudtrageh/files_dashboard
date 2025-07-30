@@ -39,10 +39,15 @@ return [
     'update' => 'Update',
     'loading' => 'Loading...',
     'no_data' => 'No data available',
+    'optional' => 'Optional',
+    'required' => 'Required',
+    'creating' => 'Creating',
+    'updating' => 'Updating',
 
     // File Management
     'file_management' => 'File Management',
     'manage_files' => 'Manage Files',
+    'manage_organize_files' => 'Manage and organize your files',
     'upload_file' => 'Upload File',
     'upload_files' => 'Upload Files',
     'select_file' => 'Select File',
@@ -61,6 +66,7 @@ return [
     'file_name' => 'File Name',
     'file_size' => 'File Size',
     'file_type' => 'File Type',
+    'file_types' => 'File Types',
     'upload_date' => 'Upload Date',
     'last_modified' => 'Last Modified',
     'download_count' => 'Download Count',
@@ -89,20 +95,28 @@ return [
     // Categories
     'category_management' => 'Category Management',
     'manage_categories' => 'Manage Categories',
+    'organize_files' => 'Organize your files',
     'create_category' => 'Create Category',
+    'add_new_category' => 'Add New Category',
+    'add_new_category_description' => 'Create a new category to organize your files',
     'edit_category' => 'Edit Category',
     'delete_category' => 'Delete Category',
     'category_name' => 'Category Name',
     'category_description' => 'Category Description',
+    'enter_category_name' => 'Enter category name',
+    'enter_category_description' => 'Enter category description (optional)',
+    'category_name_required' => 'Category name is required',
     'parent_category' => 'Parent Category',
     'root_category' => 'Root Category',
     'no_parent' => 'No Parent (Root Category)',
     'category_color' => 'Category Color',
     'category_icon' => 'Category Icon',
     'sort_order' => 'Sort Order',
+    'lower_numbers_appear_first' => 'Lower numbers appear first',
     'category_created' => 'Category created successfully',
     'category_updated' => 'Category updated successfully',
     'category_deleted' => 'Category deleted successfully',
+    'categories_reordered' => 'Categories reordered successfully',
     'category_activated' => 'Category activated',
     'category_deactivated' => 'Category deactivated',
     'categories_activated' => 'Selected categories activated',
@@ -121,6 +135,14 @@ return [
     'uncategorized' => 'Uncategorized',
     'files_count' => 'Files Count',
     'total_files_count' => 'Total Files (including subcategories)',
+    'category_information' => 'Category Information',
+    'required_fields_marked' => 'Required fields are marked with *',
+    'hierarchy_settings' => 'Hierarchy Settings',
+    'appearance_settings' => 'Appearance Settings',
+    'additional_settings' => 'Additional Settings',
+    'category_will_be_visible' => 'Category will be visible to users',
+    'use_fontawesome_classes' => 'Use FontAwesome class names',
+    'preview' => 'Preview',
 
     // Views and Display
     'grid_view' => 'Grid View',
@@ -131,6 +153,7 @@ return [
     'toggle_children' => 'Toggle Children',
     'expand_all' => 'Expand All',
     'collapse_all' => 'Collapse All',
+    'file_manager' => 'File Manager',
 
     // Search and Filters
     'search_files' => 'Search files...',
@@ -142,6 +165,12 @@ return [
     'no_files_found' => 'No files found',
     'no_categories_found' => 'No categories found',
     'try_different_search' => 'Try adjusting your search or filters',
+    'upload_first_file' => 'Upload your first file',
+    'showing_filtered_results' => 'Showing filtered results',
+    'showing' => 'Showing',
+    'to' => 'to',
+    'of' => 'of',
+    'results' => 'results',
 
     // Bulk Actions
     'bulk_actions' => 'Bulk Actions',
@@ -155,13 +184,22 @@ return [
 
     // File Upload
     'drop_files_here' => 'Drop files here or click to browse',
+    'upload_a_file' => 'Upload a file',
+    'or_drag_and_drop' => 'or drag and drop',
     'supported_formats' => 'Supported formats',
+    'supported_formats_info' => 'All common file formats are supported',
     'max_file_size' => 'Max file size',
     'uploading' => 'Uploading...',
     'upload_complete' => 'Upload complete',
     'upload_error' => 'Upload error',
     'file_title_required' => 'File title is required',
     'file_required' => 'Please select a file',
+    'enter_file_title' => 'Enter file title',
+    'enter_file_description' => 'Enter file description (optional)',
+    'new_category_name' => 'New category name',
+    'this_file_public' => 'Make this file public',
+    'public_files_accessible' => 'Public files are accessible to all users',
+    'add' => 'Add',
 
     // Statistics
     'file_statistics' => 'File Statistics',
@@ -192,15 +230,7 @@ return [
     'operation_successful' => 'Operation completed successfully',
     'operation_failed' => 'Operation failed',
     'please_try_again' => 'Please try again',
-
-    // Form Labels and Placeholders
-    'enter_file_title' => 'Enter file title',
-    'enter_file_description' => 'Enter file description (optional)',
-    'enter_category_name' => 'Enter category name',
-    'enter_category_description' => 'Enter category description (optional)',
-    'new_category_name' => 'New category name',
-    'this_file_public' => 'Make this file public',
-    'category_active' => 'Category is active',
+    'unauthorized_action' => 'Unauthorized action.',
 
     // Colors and Icons
     'red' => 'Red',
@@ -234,4 +264,10 @@ return [
     'last_week' => 'Last week',
     'this_month' => 'This month',
     'last_month' => 'Last month',
+
+    // Edit File
+    'edit_file' => 'Edit File',
+
+    // Human readable sizes
+    'human_readable_size' => 'Size',
 ];

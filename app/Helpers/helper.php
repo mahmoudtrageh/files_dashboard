@@ -4,6 +4,8 @@ use App\Models\Admin;
 use App\Models\Setting;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use App\Models\File;
+use App\Models\Category;
 
 function getAdminCount()
 {
@@ -23,6 +25,16 @@ function getPermissionCount()
 function settings($key)
 {
     return Setting::select('value')->where('key', $key)->first()->value ?? null;
+}
+
+function getFilesCount()
+{
+    return File::count();
+}
+
+function getCategoriesCount()
+{
+    return Category::count();
 }
 
 function getMediaUrl($key)
