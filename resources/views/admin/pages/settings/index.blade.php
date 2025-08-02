@@ -1,24 +1,24 @@
 {{-- resources/views/admin/pages/settings/index.blade.php --}}
 @extends('admin.layouts.app')
 
-@section('title', 'إعدادات النظام')
+@section('title', trans('all.System Settings'))
 
 @section('content')
 <div class="py-8">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center">
-            <h1 class="text-2xl font-semibold text-gray-900">إعدادات النظام</h1>
+            <h1 class="text-2xl font-semibold text-gray-900">{{ trans('all.System Settings') }}</h1>
         </div>
-        
+
         <!-- Alerts -->
         @include('admin.components.alerts')
-        
+
         <!-- Setting Categories -->
         <div class="mt-6 bg-white shadow-md rounded-lg overflow-hidden">
             <form action="{{ route('admin.settings.update') }}" method="POST" id="settings-form" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="section" id="active-section" value="general">
-                
+
                 <div class="border-b border-gray-200">
                     <nav class="flex space-x-8 space-x-reverse px-4 overflow-x-auto" aria-label="Tabs">
                         <button type="button" id="tab-general" class="tab-button border-indigo-500 text-indigo-600 whitespace-nowrap py-4 px-3 border-b-2 font-medium text-sm transition-colors duration-200 active" data-tab="general-settings" data-section="general">
@@ -26,7 +26,7 @@
                                 <svg class="h-5 w-5 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
                                 </svg>
-                                إعدادات عامة
+                                {{ trans('all.General Settings') }}
                             </div>
                         </button>
                         <button type="button" id="tab-dashboard-media" class="tab-button border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-3 border-b-2 font-medium text-sm transition-colors duration-200" data-tab="dashboard-media-settings" data-section="dashboard-media">
@@ -34,7 +34,7 @@
                                 <svg class="h-5 w-5 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" />
                                 </svg>
-                                وسائط لوحة التحكم
+                                {{ trans('all.Dashboard Media Settings') }}
                             </div>
                         </button>
                         <button type="button" id="tab-seo" class="tab-button border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-3 border-b-2 font-medium text-sm transition-colors duration-200" data-tab="seo-settings" data-section="seo">
@@ -42,7 +42,7 @@
                                 <svg class="h-5 w-5 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                     <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
                                 </svg>
-                                إعدادات SEO
+                                {{ trans('all.SEO Settings') }}
                             </div>
                         </button>
                         <button type="button" id="tab-contact" class="tab-button border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-3 border-b-2 font-medium text-sm transition-colors duration-200" data-tab="contact-settings" data-section="contact">
@@ -50,7 +50,7 @@
                                 <svg class="h-5 w-5 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                     <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                                 </svg>
-                                معلومات الاتصال
+                                {{ trans('all.Contact Settings') }}
                             </div>
                         </button>
                         <button type="button" id="tab-social" class="tab-button border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-3 border-b-2 font-medium text-sm transition-colors duration-200" data-tab="social-settings" data-section="social">
@@ -58,7 +58,7 @@
                                 <svg class="h-5 w-5 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                     <path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84" />
                                 </svg>
-                                وسائل التواصل الاجتماعي
+                                {{ trans('all.Social Media Settings') }}
                             </div>
                         </button>
                         <button type="button" id="tab-advanced" class="tab-button border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-3 border-b-2 font-medium text-sm transition-colors duration-200" data-tab="advanced-settings" data-section="advanced">
@@ -66,21 +66,21 @@
                                 <svg class="h-5 w-5 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
                                 </svg>
-                                إعدادات متقدمة
+                                {{ trans('all.Advanced Settings') }}
                             </div>
                         </button>
                     </nav>
                 </div>
-                
+
                 <!-- Forms -->
                 <div class="px-6 py-6 sm:p-8">
                     <!-- General Setting -->
                     <div class="tab-content block" id="general-settings">
                         <div class="space-y-8">
                             <div>
-                                <label for="site_name" class="block text-sm font-medium text-gray-700 mb-1">اسم الموقع</label>
+                                <label for="site_name" class="block text-sm font-medium text-gray-700 mb-1">{{ trans('all.Site Name') }}</label>
                                 <div class="relative rounded-md shadow-sm">
-                                    <input type="text" name="site_name" id="site_name" value="{{ $settings['site_name'] }}" 
+                                    <input type="text" name="site_name" id="site_name" value="{{ $settings['site_name'] }}"
                                         class="block w-full pr-10 py-3 border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 sm:text-sm">
                                     <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                         <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -94,9 +94,9 @@
                             </div>
 
                             <div>
-                                <label for="panel_version" class="block text-sm font-medium text-gray-700 mb-1">اصدار اللوحة</label>
+                                <label for="panel_version" class="block text-sm font-medium text-gray-700 mb-1">{{ trans('all.Panel Version') }}</label>
                                 <div class="relative rounded-md shadow-sm">
-                                    <input type="number" name="panel_version" id="panel_version" value="{{ $settings['panel_version'] }}" 
+                                    <input type="number" name="panel_version" id="panel_version" value="{{ $settings['panel_version'] }}"
                                         class="block w-full pr-10 py-3 border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 sm:text-sm">
                                     <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                         <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -108,15 +108,15 @@
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
-                            
+
                             <div>
-                                <label for="maintenance_mode" class="block text-sm font-medium text-gray-700 mb-1">وضع الصيانة</label>
+                                <label for="maintenance_mode" class="block text-sm font-medium text-gray-700 mb-1">{{ trans('all.Maintenance Mode') }}</label>
                                 <div class="mt-1">
                                     <label class="inline-flex items-center p-3 rounded-md bg-gray-50 hover:bg-gray-100 transition-colors duration-200 cursor-pointer">
-                                        <input type="checkbox" name="maintenance_mode" id="maintenance_mode" value="1" 
-                                            {{ $settings['maintenance_mode'] ? 'checked' : '' }} 
+                                        <input type="checkbox" name="maintenance_mode" id="maintenance_mode" value="1"
+                                            {{ $settings['maintenance_mode'] ? 'checked' : '' }}
                                             class="h-5 w-5 rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition-colors duration-200">
-                                        <span class="mr-3 text-sm text-gray-600">تفعيل وضع الصيانة يجعل الموقع غير متاح للزوار</span>
+                                        <span class="mr-3 text-sm text-gray-600">{{ trans('all.Enable maintenance mode to make the site unavailable to visitors') }}</span>
                                     </label>
                                 </div>
                                 @error('maintenance_mode')
@@ -125,18 +125,18 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Dashboard Media Settings -->
                     <div class="tab-content hidden" id="dashboard-media-settings">
                         <div class="space-y-8">
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">شعار لوحة التحكم</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">{{ trans('all.Dashboard Logo') }}</label>
                                 <div class="mt-2">
                                     <div class="relative p-6 border-2 border-dashed border-gray-300 rounded-md bg-gray-50 hover:bg-gray-100 transition-colors duration-200">
                                         <div class="text-center" id="logo-display-area">
                                             @if($settings['dashboard_logo'])
                                                 <div id="existing-logo-container" class="mb-4">
-                                                    <img src="{{ asset(getMediaUrl('dashboard_logo')) }}" alt="شعار لوحة التحكم" class="h-20 object-contain mx-auto">
+                                                    <img src="{{ asset(getMediaUrl('dashboard_logo')) }}" alt="{{ trans('all.Dashboard Logo') }}" class="h-20 object-contain mx-auto">
                                                 </div>
                                             @else
                                                 <div id="logo-upload-icon">
@@ -146,16 +146,16 @@
                                                 </div>
                                             @endif
                                             <div id="logo-preview-container" class="hidden mb-4">
-                                                <img id="logo-preview-image" src="#" alt="معاينة الشعار" class="h-20 object-contain mx-auto">
+                                                <img id="logo-preview-image" src="#" alt="{{ trans('all.logo') }}" class="h-20 object-contain mx-auto">
                                             </div>
                                         </div>
                                         <div class="flex text-sm text-gray-600 justify-center mt-4">
                                             <label for="dashboard_logo" class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500 px-4 py-3">
-                                                <span>{{ $settings['dashboard_logo'] ? 'تغيير الشعار' : 'رفع شعار' }}</span>
+                                                <span>{{ $settings['dashboard_logo'] ? trans('all.Change Logo') : trans('all.Upload Logo') }}</span>
                                                 <input id="dashboard_logo" name="dashboard_logo" type="file" class="sr-only" accept="image/*">
                                             </label>
                                         </div>
-                                        <p class="text-xs text-gray-500 text-center mt-2">PNG, JPG, GIF، SVG حتى 1MB</p>
+                                        <p class="text-xs text-gray-500 text-center mt-2">{{ trans('all.PNG JPG GIF SVG up to 1MB') }}</p>
                                     </div>
                                 </div>
                                 @error('dashboard_logo')
@@ -164,13 +164,13 @@
                             </div>
 
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">أيقونة لوحة التحكم (Favicon)</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">{{ trans('all.Favicon') }}</label>
                                 <div class="mt-2">
                                     <div class="relative p-6 border-2 border-dashed border-gray-300 rounded-md bg-gray-50 hover:bg-gray-100 transition-colors duration-200">
                                         <div class="text-center" id="favicon-display-area">
                                             @if($settings['favicon'])
                                                 <div id="existing-favicon-container" class="mb-4">
-                                                    <img src="{{ asset(getMediaUrl('favicon')) }}" alt="أيقونة لوحة التحكم" class="h-12 w-12 object-contain mx-auto">
+                                                    <img src="{{ asset(getMediaUrl('favicon')) }}" alt="{{ trans('all.Favicon') }}" class="h-12 w-12 object-contain mx-auto">
                                                 </div>
                                             @else
                                                 <div id="favicon-upload-icon">
@@ -180,17 +180,17 @@
                                                 </div>
                                             @endif
                                             <div id="favicon-preview-container" class="hidden mb-4">
-                                                <img id="favicon-preview-image" src="#" alt="معاينة الأيقونة" class="h-12 w-12 object-contain mx-auto">
+                                                <img id="favicon-preview-image" src="#" alt="{{ trans('all.icon') }}" class="h-12 w-12 object-contain mx-auto">
                                             </div>
                                         </div>
-                                        
+
                                         <div class="flex text-sm text-gray-600 justify-center mt-4">
                                             <label for="favicon" class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500 px-4 py-3">
-                                                <span>{{ $settings['favicon'] ? 'تغيير الأيقونة' : 'رفع أيقونة' }}</span>
+                                                <span>{{ $settings['favicon'] ? trans('all.Change Icon') : trans('all.Upload Icon') }}</span>
                                                 <input id="favicon" name="favicon" type="file" class="sr-only" accept="image/*">
                                             </label>
                                         </div>
-                                        <p class="text-xs text-gray-500 text-center mt-2">يفضل صورة مربعة بأبعاد 32×32 بكسل</p>
+                                        <p class="text-xs text-gray-500 text-center mt-2">{{ trans('all.Preferred square image 32x32 pixels') }}</p>
                                     </div>
                                 </div>
                                 @error('favicon')
@@ -199,14 +199,14 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- SEO Setting -->
                     <div class="tab-content hidden" id="seo-settings">
                         <div class="space-y-8">
                             <div>
-                                <label for="meta_title" class="block text-sm font-medium text-gray-700 mb-1">عنوان الموقع (Meta Title)</label>
+                                <label for="meta_title" class="block text-sm font-medium text-gray-700 mb-1">{{ trans('all.Meta Title') }}</label>
                                 <div class="relative rounded-md shadow-sm">
-                                    <input type="text" name="meta_title" id="meta_title" value="{{ $settings['meta_title'] }}" 
+                                    <input type="text" name="meta_title" id="meta_title" value="{{ $settings['meta_title'] }}"
                                         class="block w-full pr-10 py-3 border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 sm:text-sm">
                                     <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                         <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -218,11 +218,11 @@
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
-                            
+
                             <div>
-                                <label for="meta_description" class="block text-sm font-medium text-gray-700 mb-1">وصف الموقع (Meta Description)</label>
+                                <label for="meta_description" class="block text-sm font-medium text-gray-700 mb-1">{{ trans('all.Meta Description') }}</label>
                                 <div class="relative rounded-md shadow-sm">
-                                    <textarea name="meta_description" id="meta_description" rows="3" 
+                                    <textarea name="meta_description" id="meta_description" rows="3"
                                         class="block w-full pr-10 py-3 border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 sm:text-sm">{{ settings('meta_description', '') }}</textarea>
                                     <div class="absolute top-3 right-0 pr-3 flex items-center pointer-events-none">
                                         <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -234,11 +234,11 @@
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
-                            
+
                             <div>
-                                <label for="meta_keywords" class="block text-sm font-medium text-gray-700 mb-1">الكلمات المفتاحية (Meta Keywords)</label>
+                                <label for="meta_keywords" class="block text-sm font-medium text-gray-700 mb-1">{{ trans('all.Meta Keywords') }}</label>
                                 <div class="relative rounded-md shadow-sm">
-                                    <input type="text" name="meta_keywords" id="meta_keywords" value="{{ $settings['meta_keywords'] }}" 
+                                    <input type="text" name="meta_keywords" id="meta_keywords" value="{{ $settings['meta_keywords'] }}"
                                         class="block w-full pr-10 py-3 border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 sm:text-sm">
                                     <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                         <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -246,21 +246,21 @@
                                         </svg>
                                     </div>
                                 </div>
-                                <p class="mt-2 text-sm text-gray-500">افصل بين الكلمات المفتاحية بفاصلة (،)</p>
+                                <p class="mt-2 text-sm text-gray-500">{{ trans('all.Separate keywords with comma') }}</p>
                                 @error('meta_keywords')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Contact Setting -->
                     <div class="tab-content hidden" id="contact-settings">
                         <div class="space-y-8">
                             <div>
-                                <label for="contact_email" class="block text-sm font-medium text-gray-700 mb-1">البريد الإلكتروني للاتصال</label>
+                                <label for="contact_email" class="block text-sm font-medium text-gray-700 mb-1">{{ trans('all.Contact Email') }}</label>
                                 <div class="relative rounded-md shadow-sm">
-                                    <input type="email" name="contact_email" id="contact_email" value="{{ $settings['contact_email'] }}" 
+                                    <input type="email" name="contact_email" id="contact_email" value="{{ $settings['contact_email'] }}"
                                         class="block w-full pr-10 py-3 border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 sm:text-sm">
                                     <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                         <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -273,11 +273,11 @@
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
-                            
+
                             <div>
-                                <label for="phone_number" class="block text-sm font-medium text-gray-700 mb-1">رقم الهاتف</label>
+                                <label for="phone_number" class="block text-sm font-medium text-gray-700 mb-1">{{ trans('all.Phone Number') }}</label>
                                 <div class="relative rounded-md shadow-sm">
-                                    <input type="text" name="phone_number" id="phone_number" value="{{ $settings['phone_number'] }}" 
+                                    <input type="text" name="phone_number" id="phone_number" value="{{ $settings['phone_number'] }}"
                                         class="block w-full pr-10 py-3 border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 sm:text-sm">
                                     <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                         <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -289,11 +289,11 @@
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
-                            
+
                             <div>
-                                <label for="address" class="block text-sm font-medium text-gray-700 mb-1">العنوان</label>
+                                <label for="address" class="block text-sm font-medium text-gray-700 mb-1">{{ trans('all.Address') }}</label>
                                 <div class="relative rounded-md shadow-sm">
-                                    <textarea name="address" id="address" rows="3" 
+                                    <textarea name="address" id="address" rows="3"
                                         class="block w-full pr-10 py-3 border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 sm:text-sm">{{ settings('address', '') }}</textarea>
                                     <div class="absolute top-3 right-0 pr-3 flex items-center pointer-events-none">
                                         <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -307,67 +307,67 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Social Media Setting -->
                     <div class="tab-content hidden" id="social-settings">
                         <div class="space-y-8">
                             <div>
-                                <label for="facebook_url" class="block text-sm font-medium text-gray-700 mb-1">رابط فيسبوك</label>
+                                <label for="facebook_url" class="block text-sm font-medium text-gray-700 mb-1">{{ trans('all.Facebook URL') }}</label>
                                 <div class="mt-1 flex rounded-md shadow-sm">
                                     <span class="inline-flex items-center px-4 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
                                         <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                             <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
                                         </svg>
                                     </span>
-                                    <input type="text" name="facebook_url" id="facebook_url" value="{{ $settings['facebook_url'] }}" 
+                                    <input type="text" name="facebook_url" id="facebook_url" value="{{ $settings['facebook_url'] }}"
                                         class="flex-1 block w-full rounded-l-md border-gray-300 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 sm:text-sm">
                                 </div>
                                 @error('facebook_url')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
-                            
+
                             <div>
-                                <label for="twitter_url" class="block text-sm font-medium text-gray-700 mb-1">رابط تويتر</label>
+                                <label for="twitter_url" class="block text-sm font-medium text-gray-700 mb-1">{{ trans('all.Twitter URL') }}</label>
                                 <div class="mt-1 flex rounded-md shadow-sm">
                                     <span class="inline-flex items-center px-4 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
                                         <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                             <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
                                         </svg>
                                     </span>
-                                    <input type="text" name="twitter_url" id="twitter_url" value="{{ $settings['twitter_url'] }}" 
+                                    <input type="text" name="twitter_url" id="twitter_url" value="{{ $settings['twitter_url'] }}"
                                         class="flex-1 block w-full rounded-l-md border-gray-300 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 sm:text-sm">
                                 </div>
                                 @error('twitter_url')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
-                            
+
                             <div>
-                                <label for="instagram_url" class="block text-sm font-medium text-gray-700 mb-1">رابط انستجرام</label>
+                                <label for="instagram_url" class="block text-sm font-medium text-gray-700 mb-1">{{ trans('all.Instagram URL') }}</label>
                                 <div class="mt-1 flex rounded-md shadow-sm">
                                     <span class="inline-flex items-center px-4 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
                                         <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                             <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" />
                                         </svg>
                                     </span>
-                                    <input type="text" name="instagram_url" id="instagram_url" value="{{ $settings['instagram_url'] }}" 
+                                    <input type="text" name="instagram_url" id="instagram_url" value="{{ $settings['instagram_url'] }}"
                                         class="flex-1 block w-full rounded-l-md border-gray-300 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 sm:text-sm">
                                 </div>
                                 @error('instagram_url')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
-                            
+
                             <div>
-                                <label for="linkedin_url" class="block text-sm font-medium text-gray-700 mb-1">رابط لينكد إن</label>
+                                <label for="linkedin_url" class="block text-sm font-medium text-gray-700 mb-1">{{ trans('all.LinkedIn URL') }}</label>
                                 <div class="mt-1 flex rounded-md shadow-sm">
                                     <span class="inline-flex items-center px-4 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
                                         <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                             <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
                                         </svg>
                                     </span>
-                                    <input type="text" name="linkedin_url" id="linkedin_url" value="{{ $settings['linkedin_url'] }}" 
+                                    <input type="text" name="linkedin_url" id="linkedin_url" value="{{ $settings['linkedin_url'] }}"
                                         class="flex-1 block w-full rounded-l-md border-gray-300 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 sm:text-sm">
                                 </div>
                                 @error('linkedin_url')
@@ -376,29 +376,29 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Advanced Setting -->
                     <div class="tab-content hidden" id="advanced-settings">
                         <div class="space-y-8">
                             <div>
-                                <label for="cache_enabled" class="block text-sm font-medium text-gray-700 mb-1">تفعيل التخزين المؤقت</label>
+                                <label for="cache_enabled" class="block text-sm font-medium text-gray-700 mb-1">{{ trans('all.Cache Enabled') }}</label>
                                 <div class="mt-1">
                                     <label class="inline-flex items-center p-3 rounded-md bg-gray-50 hover:bg-gray-100 transition-colors duration-200 cursor-pointer">
-                                        <input type="checkbox" name="cache_enabled" id="cache_enabled" value="1" 
-                                            {{ $settings['cache_enabled'] ? 'checked' : '' }} 
+                                        <input type="checkbox" name="cache_enabled" id="cache_enabled" value="1"
+                                            {{ $settings['cache_enabled'] ? 'checked' : '' }}
                                             class="h-5 w-5 rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition-colors duration-200">
-                                        <span class="mr-3 text-sm text-gray-600">تفعيل ذاكرة التخزين المؤقت لتحسين أداء الموقع</span>
+                                        <span class="mr-3 text-sm text-gray-600">{{ trans('all.Enable cache to improve site performance') }}</span>
                                     </label>
                                 </div>
                                 @error('cache_enabled')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
-                            
+
                             <div>
-                                <label for="cache_expiration" class="block text-sm font-medium text-gray-700 mb-1">مدة التخزين المؤقت (بالثواني)</label>
+                                <label for="cache_expiration" class="block text-sm font-medium text-gray-700 mb-1">{{ trans('all.Cache Expiration') }}</label>
                                 <div class="relative rounded-md shadow-sm">
-                                    <input type="number" name="cache_expiration" id="cache_expiration" value="{{ $settings['cache_expiration'] }}" 
+                                    <input type="number" name="cache_expiration" id="cache_expiration" value="{{ $settings['cache_expiration'] }}"
                                         class="block w-full pr-10 py-3 border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 sm:text-sm">
                                     <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                         <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -406,18 +406,18 @@
                                         </svg>
                                     </div>
                                 </div>
-                                <p class="mt-2 text-sm text-gray-500">86400 ثانية = 24 ساعة</p>
+                                <p class="mt-2 text-sm text-gray-500">{{ trans('all.86400 seconds = 24 hours') }}</p>
                                 @error('cache_expiration')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
-                            
+
                             <div>
-                                <label for="google_analytics_id" class="block text-sm font-medium text-gray-700 mb-1">معرف Google Analytics</label>
+                                <label for="google_analytics_id" class="block text-sm font-medium text-gray-700 mb-1">{{ trans('all.Google Analytics ID') }}</label>
                                 <div class="relative rounded-md shadow-sm">
-                                    <input type="text" name="google_analytics_id" id="google_analytics_id" value="{{ $settings['google_analytics_id'] }}" 
-                                        class="block w-full pr-10 py-3 border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 sm:text-sm" 
-                                        placeholder="مثال: G-XXXXXXXXXX">
+                                    <input type="text" name="google_analytics_id" id="google_analytics_id" value="{{ $settings['google_analytics_id'] }}"
+                                        class="block w-full pr-10 py-3 border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 sm:text-sm"
+                                        placeholder="{{ trans('all.Example G-XXXXXXXXXX') }}">
                                     <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                         <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                             <path fill-rule="evenodd" d="M6.672 1.911a1 1 0 10-1.932.518l.259.966a1 1 0 001.932-.518l-.26-.966zM2.429 4.74a1 1 0 10-.517 1.932l.966.259a1 1 0 00.517-1.932l-.966-.26zm8.814-.569a1 1 0 00-1.415-1.414l-.707.707a1 1 0 101.415 1.415l.707-.708zm-7.071 7.072l.707-.707A1 1 0 003.465 9.12l-.708.707a1 1 0 001.415 1.415zm3.2-5.171a1 1 0 00-1.3 1.3l4 10a1 1 0 001.823.075l1.38-2.759 3.018 3.02a1 1 0 001.414-1.415l-3.019-3.02 2.76-1.379a1 1 0 00-.076-1.822l-10-4z" clip-rule="evenodd" />
@@ -428,11 +428,11 @@
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
-                            
+
                             <div>
-                                <label for="custom_header_scripts" class="block text-sm font-medium text-gray-700 mb-1">نصوص برمجية مخصصة في الهيدر</label>
+                                <label for="custom_header_scripts" class="block text-sm font-medium text-gray-700 mb-1">{{ trans('all.Custom Header Scripts') }}</label>
                                 <div class="relative rounded-md shadow-sm">
-                                    <textarea name="custom_header_scripts" id="custom_header_scripts" rows="4" 
+                                    <textarea name="custom_header_scripts" id="custom_header_scripts" rows="4"
                                         class="block w-full pr-10 py-3 border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 sm:text-sm font-mono">{{ $settings['custom_header_scripts'] }}</textarea>
                                     <div class="absolute top-3 right-0 pr-3 flex items-center pointer-events-none">
                                         <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -440,21 +440,21 @@
                                         </svg>
                                     </div>
                                 </div>
-                                <p class="mt-2 text-sm text-gray-500">سيتم إضافة هذه النصوص البرمجية في نهاية وسم &lt;head&gt;</p>
+                                <p class="mt-2 text-sm text-gray-500">{{ trans('all.These scripts will be added at the end of head tag') }}</p>
                                 @error('custom_header_scripts')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Common Save Button for All Tabs -->
                     <div class="flex justify-end mt-8 pt-6 border-t border-gray-200">
                         <button type="submit" class="inline-flex items-center px-5 py-2.5 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition-colors duration-200">
                             <svg class="-ml-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                             </svg>
-                            حفظ الإعدادات
+                            {{ trans('all.Save Settings') }}
                         </button>
                     </div>
                 </div>
@@ -470,18 +470,18 @@
     .tab-content {
         display: none;
     }
-    
+
     /* Show active tab */
     .tab-content.block {
         display: block;
     }
-    
+
     /* Transition effects for tabs */
     .tab-button {
         position: relative;
         transition: all 0.2s ease-in-out;
     }
-    
+
     .tab-button:after {
         content: '';
         position: absolute;
@@ -492,7 +492,7 @@
         background-color: transparent;
         transition: all 0.2s ease-in-out;
     }
-    
+
     .tab-button.active:after {
         background-color: currentColor;
     }
@@ -505,7 +505,7 @@
         const tabButtons = document.querySelectorAll('.tab-button');
         const tabContents = document.querySelectorAll('.tab-content');
         const activeSectionInput = document.getElementById('active-section');
-        
+
         // Function to activate a tab
         function activateTab(tabId, sectionValue) {
             // Hide all tabs
@@ -513,36 +513,36 @@
                 content.classList.add('hidden');
                 content.classList.remove('block');
             });
-            
+
             // Show selected tab
             const activeContent = document.getElementById(tabId);
             if (activeContent) {
                 activeContent.classList.remove('hidden');
                 activeContent.classList.add('block');
             }
-            
+
             // Update tab button styles
             tabButtons.forEach(button => {
                 button.classList.remove('border-indigo-500', 'text-indigo-600', 'active');
                 button.classList.add('border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
             });
-            
+
             // Find the active button
             const activeButton = document.querySelector(`.tab-button[data-tab="${tabId}"]`);
             if (activeButton) {
                 activeButton.classList.remove('border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
                 activeButton.classList.add('border-indigo-500', 'text-indigo-600', 'active');
             }
-            
+
             // Update the active section input for form submission
             if (sectionValue) {
                 activeSectionInput.value = sectionValue;
             }
-            
+
             // Save the active tab to localStorage
             localStorage.setItem('activeSettingsTab', tabId);
         }
-        
+
         // Add click event listeners to all tab buttons
         tabButtons.forEach(button => {
             button.addEventListener('click', function() {
@@ -551,7 +551,7 @@
                 activateTab(tabId, sectionValue);
             });
         });
-        
+
         // Initialize - show the saved tab or first tab
         const savedTabId = localStorage.getItem('activeSettingsTab');
         if (savedTabId && document.getElementById(savedTabId)) {
@@ -563,7 +563,7 @@
             const initialSectionValue = tabButtons[0]?.getAttribute('data-section') || 'general';
             activateTab(initialTabId, initialSectionValue);
         }
-        
+
         // If URL has a hash, try to activate that tab
         if (window.location.hash) {
             const tabId = window.location.hash.substring(1);
@@ -574,7 +574,7 @@
                 activateTab(tabId, sectionValue);
             }
         }
-        
+
         // Update URL hash when tab changes
         tabButtons.forEach(button => {
             button.addEventListener('click', function() {
@@ -586,45 +586,45 @@
         // Handle image previews
         function setupImagePreview(inputId, previewImageId, previewContainerId, existingContainerId, uploadIconId) {
             const input = document.getElementById(inputId);
-            
+
             if (input) {
                 input.addEventListener('change', function() {
                     const previewContainer = document.getElementById(previewContainerId);
                     const previewImage = document.getElementById(previewImageId);
                     const uploadIcon = document.getElementById(uploadIconId);
                     const existingContainer = document.getElementById(existingContainerId);
-                    
+
                     if (this.files && this.files[0]) {
                         const reader = new FileReader();
-                        
+
                         reader.onload = function(e) {
                             // Update preview image
                             if (previewImage) {
                                 previewImage.src = e.target.result;
                             }
-                            
+
                             // Hide upload icon if visible
                             if (uploadIcon) {
                                 uploadIcon.classList.add('hidden');
                             }
-                            
+
                             // Hide existing image container if visible
                             if (existingContainer) {
                                 existingContainer.classList.add('hidden');
                             }
-                            
+
                             // Show the preview container
                             if (previewContainer) {
                                 previewContainer.classList.remove('hidden');
                             }
                         };
-                        
+
                         reader.readAsDataURL(this.files[0]);
                     }
                 });
             }
         }
-        
+
         // Setup image previews for both logo and favicon
         setupImagePreview(
             'dashboard_logo',
@@ -633,7 +633,7 @@
             'existing-logo-container',
             'logo-upload-icon'
         );
-        
+
         setupImagePreview(
             'favicon',
             'favicon-preview-image',

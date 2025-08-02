@@ -14,8 +14,9 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.10.1",
         "livewire/livewire": "^3.6",
-        "spatie/laravel-medialibrary": "^11.12",
-        "spatie/laravel-permission": "^6.17"
+        "spatie/laravel-medialibrary": "^11.13",
+        "spatie/laravel-permission": "^6.17",
+        "spatie/laravel-sluggable": "^3.7"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.15",

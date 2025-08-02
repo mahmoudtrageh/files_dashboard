@@ -15,9 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
-            $table->text('description')->nullable();
-            $table->string('color', 7)->default('#6366f1'); // Hex color
-            $table->string('icon')->nullable(); // Font Awesome icon class
             $table->boolean('is_active')->default(true);
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->integer('sort_order')->default(0);

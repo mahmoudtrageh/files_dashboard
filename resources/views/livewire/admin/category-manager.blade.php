@@ -2,8 +2,8 @@
     <!-- Header with Actions -->
     <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <div>
-            <h2 class="text-2xl font-bold text-gray-900">{{ __('Category Management') }}</h2>
-            <p class="text-sm text-gray-600">{{ __('Organize your files with categories') }}</p>
+            <h2 class="text-2xl font-bold text-gray-900">{{ trans('all.Category Management') }}</h2>
+            <p class="text-sm text-gray-600">{{ trans('all.Organize your files with categories') }}</p>
         </div>
 
         <div class="flex items-center space-x-3 space-x-reverse">
@@ -29,7 +29,7 @@
                 class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
             >
                 <i class="fas fa-plus mr-2"></i>
-                {{ __('Create Category') }}
+                {{ trans('all.Create Category') }}
             </button>
         </div>
     </div>
@@ -39,13 +39,13 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <!-- Search -->
             <div>
-                <label for="search" class="block text-sm font-medium text-gray-700 mb-1">{{ __('Search') }}</label>
+                <label for="search" class="block text-sm font-medium text-gray-700 mb-1">{{ trans('all.Search') }}</label>
                 <div class="relative">
                     <input
                         type="text"
                         wire:model.live.debounce.300ms="search"
                         class="block w-full pr-10 border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
-                        placeholder="{{ __('Search categories...') }}"
+                        placeholder="{{ trans('all.Search categories...') }}"
                     >
                     <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                         <i class="fas fa-search text-gray-400"></i>
@@ -56,7 +56,7 @@
             <!-- Per Page (only for list view) -->
             @if($viewMode === 'list')
                 <div>
-                    <label for="per-page" class="block text-sm font-medium text-gray-700 mb-1">{{ __('Per Page') }}</label>
+                    <label for="per-page" class="block text-sm font-medium text-gray-700 mb-1">{{ trans('all.Per Page') }}</label>
                     <select
                         wire:model.live="perPage"
                         class="block w-full border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
@@ -76,7 +76,7 @@
                     class="text-sm text-gray-600 hover:text-gray-900"
                 >
                     <i class="fas fa-undo mr-1"></i>
-                    {{ __('Reset Filters') }}
+                    {{ trans('all.Reset Filters') }}
                 </button>
             </div>
         </div>
@@ -89,10 +89,10 @@
                         wire:model="bulkAction"
                         class="text-sm border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
                     >
-                        <option value="">{{ __('Bulk Actions') }}</option>
-                        <option value="activate">{{ __('Activate') }}</option>
-                        <option value="deactivate">{{ __('Deactivate') }}</option>
-                        <option value="delete">{{ __('Delete') }}</option>
+                        <option value="">{{ trans('all.Bulk Actions') }}</option>
+                        <option value="activate">{{ trans('all.Activate') }}</option>
+                        <option value="deactivate">{{ trans('all.Deactivate') }}</option>
+                        <option value="delete">{{ trans('all.Delete') }}</option>
                     </select>
 
                     <button
@@ -100,11 +100,11 @@
                         class="px-3 py-1 bg-primary-600 text-white text-sm rounded-md hover:bg-primary-700"
                         @if(empty($bulkAction)) disabled @endif
                     >
-                        {{ __('Apply') }}
+                        {{ trans('all.Apply') }}
                     </button>
 
                     <span class="text-sm text-gray-600">
-                        {{ count($selectedCategories) }} {{ __('selected') }}
+                        {{ count($selectedCategories) }} {{ trans('all.selected') }}
                     </span>
                 </div>
             </div>
@@ -115,7 +115,7 @@
     <div wire:loading class="flex justify-center items-center py-4">
         <div class="flex items-center space-x-2 space-x-reverse">
             <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-primary-600"></div>
-            <span class="text-sm text-gray-600">{{ __('Loading...') }}</span>
+            <span class="text-sm text-gray-600">{{ trans('all.Loading...') }}</span>
         </div>
     </div>
 
@@ -135,19 +135,19 @@
                                 >
                             </th>
                             <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                {{ __('Category') }}
+                                {{ trans('all.Category') }}
                             </th>
                             <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                {{ __('Files Count') }}
+                                {{ trans('all.Files Count') }}
                             </th>
                             <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                {{ __('Status') }}
+                                {{ trans('all.Status') }}
                             </th>
                             <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                {{ __('Created') }}
+                                {{ trans('all.Created') }}
                             </th>
                             <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                {{ __('Actions') }}
+                                {{ trans('all.Actions') }}
                             </th>
                         </tr>
                     </thead>
@@ -179,7 +179,7 @@
                                                 {{ $category->name }}
                                                 @if($category->parent)
                                                     <span class="text-xs text-gray-500">
-                                                        ({{ __('under') }} {{ $category->parent->name }})
+                                                        ({{ trans('all.under') }} {{ $category->parent->name }})
                                                     </span>
                                                 @endif
                                             </div>
@@ -199,7 +199,7 @@
                                         wire:click="toggleCategoryStatus({{ $category->id }})"
                                         class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $category->is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}"
                                     >
-                                        {{ $category->is_active ? __('Active') : __('Inactive') }}
+                                        {{ $category->is_active ? trans('all.Active') : trans('all.Inactive') }}
                                     </button>
                                 </td>
                                 <td class="px-6 py-4 text-sm text-gray-500">
@@ -210,15 +210,15 @@
                                         <button
                                             wire:click="editCategory({{ $category->id }})"
                                             class="text-yellow-600 hover:text-yellow-900"
-                                            title="{{ __('Edit') }}"
+                                            title="{{ trans('all.Edit') }}"
                                         >
                                             <i class="fas fa-edit"></i>
                                         </button>
                                         <button
                                             wire:click="deleteCategory({{ $category->id }})"
-                                            onclick="return confirm('{{ __('Are you sure? This will also move any child categories to the parent level.') }}')"
+                                            onclick="return confirm('{{ trans('all.Are you sure? This will also move any child categories to the parent level.') }}')"
                                             class="text-red-600 hover:text-red-900"
-                                            title="{{ __('Delete') }}"
+                                            title="{{ trans('all.Delete') }}"
                                         >
                                             <i class="fas fa-trash"></i>
                                         </button>
@@ -229,8 +229,8 @@
                             <tr>
                                 <td colspan="6" class="px-6 py-12 text-center">
                                     <i class="fas fa-folder-open text-4xl text-gray-300 mb-4"></i>
-                                    <h3 class="text-lg font-medium text-gray-900 mb-2">{{ __('No categories found') }}</h3>
-                                    <p class="text-gray-500">{{ __('Create your first category to get started') }}</p>
+                                    <h3 class="text-lg font-medium text-gray-900 mb-2">{{ trans('all.No categories found') }}</h3>
+                                    <p class="text-gray-500">{{ trans('all.Create your first category to get started') }}</p>
                                 </td>
                             </tr>
                         @endforelse
@@ -256,8 +256,8 @@
                 @else
                     <div class="text-center py-12">
                         <i class="fas fa-sitemap text-4xl text-gray-300 mb-4"></i>
-                        <h3 class="text-lg font-medium text-gray-900 mb-2">{{ __('No categories found') }}</h3>
-                        <p class="text-gray-500">{{ __('Create your first category to see the tree structure') }}</p>
+                        <h3 class="text-lg font-medium text-gray-900 mb-2">{{ trans('all.No categories found') }}</h3>
+                        <p class="text-gray-500">{{ trans('all.Create your first category to see the tree structure') }}</p>
                     </div>
                 @endif
             </div>
@@ -278,41 +278,41 @@
                             <div class="sm:flex sm:items-start">
                                 <div class="mt-3 text-center sm:mt-0 sm:text-right w-full">
                                     <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
-                                        {{ $editingCategory ? __('Edit Category') : __('Create Category') }}
+                                        {{ $editingCategory ? trans('all.Edit Category') : trans('all.Create Category') }}
                                     </h3>
 
                                     <div class="space-y-4">
                                         <!-- Name -->
                                         <div>
-                                            <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('Name') }}</label>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">{{ trans('all.Name') }}</label>
                                             <input
                                                 type="text"
                                                 wire:model="name"
                                                 class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
-                                                placeholder="{{ __('Enter category name') }}"
+                                                placeholder="{{ trans('all.Enter category name') }}"
                                             >
                                             @error('name') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                                         </div>
 
                                         <!-- Description -->
                                         <div>
-                                            <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('Description') }}</label>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">{{ trans('all.Description') }}</label>
                                             <textarea
                                                 wire:model="description"
                                                 rows="3"
                                                 class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
-                                                placeholder="{{ __('Enter category description (optional)') }}"
+                                                placeholder="{{ trans('all.Enter category description (optional)') }}"
                                             ></textarea>
                                         </div>
 
                                         <!-- Parent Category -->
                                         <div>
-                                            <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('Parent Category') }}</label>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">{{ trans('all.Parent Category') }}</label>
                                             <select
                                                 wire:model="parentId"
                                                 class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
                                             >
-                                                <option value="">{{ __('No Parent (Root Category)') }}</option>
+                                                <option value="">{{ trans('all.No Parent (Root Category)') }}</option>
                                                 @foreach($parentCategories as $parent)
                                                     <option value="{{ $parent->id }}">{{ $parent->name }}</option>
                                                 @endforeach
@@ -324,7 +324,7 @@
                                         <div class="grid grid-cols-2 gap-4">
                                             <!-- Color -->
                                             <div>
-                                                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('Color') }}</label>
+                                                <label class="block text-sm font-medium text-gray-700 mb-2">{{ trans('all.Color') }}</label>
                                                 <div class="grid grid-cols-5 gap-2">
                                                     @foreach($colorOptions as $colorValue => $colorName)
                                                         <button
@@ -340,12 +340,12 @@
 
                                             <!-- Icon -->
                                             <div>
-                                                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('Icon') }}</label>
+                                                <label class="block text-sm font-medium text-gray-700 mb-2">{{ trans('all.Icon') }}</label>
                                                 <select
                                                     wire:model="icon"
                                                     class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
                                                 >
-                                                    <option value="">{{ __('No Icon') }}</option>
+                                                    <option value="">{{ trans('all.No Icon') }}</option>
                                                     @foreach($iconOptions as $iconClass => $iconName)
                                                         <option value="{{ $iconClass }}">{{ $iconName }}</option>
                                                     @endforeach
@@ -355,7 +355,7 @@
 
                                         <!-- Sort Order -->
                                         <div>
-                                            <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('Sort Order') }}</label>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">{{ trans('all.Sort Order') }}</label>
                                             <input
                                                 type="number"
                                                 wire:model="sortOrder"
@@ -373,7 +373,7 @@
                                                 class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
                                             >
                                             <label class="mr-2 block text-sm text-gray-900">
-                                                {{ __('Active') }}
+                                                {{ trans('all.Active') }}
                                             </label>
                                         </div>
                                     </div>
@@ -386,14 +386,14 @@
                                 type="submit"
                                 class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary-600 text-base font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 sm:ml-3 sm:w-auto sm:text-sm"
                             >
-                                {{ $editingCategory ? __('Update') : __('Create') }}
+                                {{ $editingCategory ? trans('all.Update') : trans('all.Create') }}
                             </button>
                             <button
                                 type="button"
                                 wire:click="hideForm"
                                 class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 sm:mt-0 sm:w-auto sm:text-sm"
                             >
-                                {{ __('Cancel') }}
+                                {{ trans('all.Cancel') }}
                             </button>
                         </div>
                     </form>

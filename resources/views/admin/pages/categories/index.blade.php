@@ -1,12 +1,12 @@
 {{-- resources/views/admin/pages/categories/index.blade.php --}}
 @extends('admin.layouts.app')
 
-@section('title', __('Category Management'))
+@section('title', trans('all.Category Management'))
 
 @push('breadcrumbs')
     @php
     $breadcrumbs = [
-        ['name' => __('Category Management')]
+        ['name' => trans('all.Category Management')]
     ];
     @endphp
 @endpush
@@ -17,27 +17,26 @@
     <div class="bg-white rounded-lg shadow p-6">
         <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <div>
-                <h1 class="text-2xl font-bold text-gray-900">{{ __('Category Management') }}</h1>
-                <p class="text-gray-600">{{ __('Organize your files with a structured category system') }}</p>
+                <h1 class="text-2xl font-bold text-gray-900">{{ trans('all.Category Management') }}</h1>
             </div>
 
             <!-- Quick Stats -->
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
                 <div class="text-center">
                     <div class="text-2xl font-bold text-primary-600">{{ $statistics['total_categories'] ?? 0 }}</div>
-                    <div class="text-sm text-gray-500">{{ __('Total Categories') }}</div>
+                    <div class="text-sm text-gray-500">{{ trans('all.Total Categories') }}</div>
                 </div>
                 <div class="text-center">
                     <div class="text-2xl font-bold text-blue-600">{{ $statistics['root_categories'] ?? 0 }}</div>
-                    <div class="text-sm text-gray-500">{{ __('Root Categories') }}</div>
+                    <div class="text-sm text-gray-500">{{ trans('all.Root Categories') }}</div>
                 </div>
                 <div class="text-center">
                     <div class="text-2xl font-bold text-green-600">{{ $statistics['categories_with_files'] ?? 0 }}</div>
-                    <div class="text-sm text-gray-500">{{ __('With Files') }}</div>
+                    <div class="text-sm text-gray-500">{{ trans('all.With Files') }}</div>
                 </div>
                 <div class="text-center">
                     <div class="text-2xl font-bold text-gray-600">{{ $statistics['empty_categories'] ?? 0 }}</div>
-                    <div class="text-sm text-gray-500">{{ __('Empty') }}</div>
+                    <div class="text-sm text-gray-500">{{ trans('all.Empty') }}</div>
                 </div>
             </div>
         </div>
@@ -46,7 +45,7 @@
     <!-- Most Used Categories -->
     @if(isset($statistics['most_used_categories']) && $statistics['most_used_categories']->isNotEmpty())
     <div class="bg-white rounded-lg shadow p-6">
-        <h2 class="text-lg font-semibold text-gray-900 mb-4">{{ __('Most Used Categories') }}</h2>
+        <h2 class="text-lg font-semibold text-gray-900 mb-4">{{ trans('all.Most Used Categories') }}</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             @foreach($statistics['most_used_categories'] as $category)
                 <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
@@ -61,7 +60,7 @@
                         </div>
                         <div>
                             <div class="font-medium text-gray-900">{{ $category->name }}</div>
-                            <div class="text-sm text-gray-500">{{ $category->files_count }} {{ __('files.files') }}</div>
+                            <div class="text-sm text-gray-500">{{ $category->files_count }} {{ trans('all.files.files') }}</div>
                         </div>
                     </div>
                     <div class="text-right">
@@ -78,23 +77,14 @@
 
     <!-- Quick Actions -->
     <div class="bg-white rounded-lg shadow p-6">
-        <h2 class="text-lg font-semibold text-gray-900 mb-4">{{ __('Quick Actions') }}</h2>
+        <h2 class="text-lg font-semibold text-gray-900 mb-4">{{ trans('all.Quick Actions') }}</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <a href="{{ route('admin.categories.create') }}"
                class="flex items-center justify-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-primary-400 hover:bg-primary-50 transition-colors">
                 <div class="text-center">
                     <i class="fas fa-plus text-2xl text-gray-400 mb-2"></i>
-                    <div class="font-medium text-gray-900">{{ __('Create Category') }}</div>
-                    <div class="text-sm text-gray-500">{{ __('Add a new category') }}</div>
-                </div>
-            </a>
-
-            <a href="{{ route('admin.files.index') }}"
-               class="flex items-center justify-center p-4 border border-gray-300 rounded-lg hover:border-primary-400 hover:bg-primary-50 transition-colors">
-                <div class="text-center">
-                    <i class="fas fa-folder-open text-2xl text-gray-400 mb-2"></i>
-                    <div class="font-medium text-gray-900">{{ __('Browse Files') }}</div>
-                    <div class="text-sm text-gray-500">{{ __('View all files') }}</div>
+                    <div class="font-medium text-gray-900">{{ trans('all.Create Category') }}</div>
+                    <div class="text-sm text-gray-500">{{ trans('all.Add Category') }}</div>
                 </div>
             </a>
         </div>
@@ -104,11 +94,11 @@
     <div class="bg-white rounded-lg shadow">
         <div class="p-6">
             <div class="flex items-center justify-between mb-4">
-                <h2 class="text-lg font-semibold text-gray-900">{{ __('All Categories') }}</h2>
+                <h2 class="text-lg font-semibold text-gray-900">{{ trans('all.All Categories') }}</h2>
                 <div class="flex items-center space-x-2">
                     <input type="text"
                            id="search-categories"
-                           placeholder="{{ __('Search categories...') }}"
+                           placeholder="{{ trans('all.Search Categories') }}"
                            class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
                     <button onclick="toggleTreeView()"
                             class="px-3 py-2 bg-gray-100 text-gray-700 rounded-md text-sm hover:bg-gray-200">
@@ -120,7 +110,7 @@
             <div id="categories-container" class="space-y-2">
                 <div class="flex items-center justify-center py-8">
                     <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
-                    <span class="ml-2 text-gray-600">{{ __('Loading categories...') }}</span>
+                    <span class="ml-2 text-gray-600">{{ trans('all.Loading categories...') }}</span>
                 </div>
             </div>
         </div>
@@ -193,15 +183,15 @@ function renderCategory(category, level) {
                 <div class="flex items-center space-x-2">
                     <a href="/dashboard/categories/${category.id}"
                        class="text-blue-600 hover:text-blue-700 text-sm px-2 py-1 rounded hover:bg-blue-50">
-                       {{ __('View') }}
+                       {{ trans('all.view') }}
                     </a>
                     <a href="/dashboard/categories/${category.id}/edit"
                        class="text-green-600 hover:text-green-700 text-sm px-2 py-1 rounded hover:bg-green-50">
-                       {{ __('Edit') }}
+                       {{ trans('all.edit') }}
                     </a>
                     <button onclick="deleteCategory(${category.id}, '${category.name}')"
                             class="text-red-600 hover:text-red-700 text-sm px-2 py-1 rounded hover:bg-red-50">
-                        {{ __('Delete') }}
+                        {{ trans('all.delete') }}
                     </button>
                 </div>
             </div>
@@ -272,7 +262,7 @@ function filterCategories(query) {
 }
 
 function deleteCategory(id, name) {
-    if (confirm(`{{ __('Are you sure you want to delete the category') }} "${name}"?`)) {
+    if (confirm(`{{ trans('all.Are you sure you want to delete the category') }} "${name}"?`)) {
         const form = document.createElement('form');
         form.method = 'POST';
         form.action = `/admin/categories/${id}`;

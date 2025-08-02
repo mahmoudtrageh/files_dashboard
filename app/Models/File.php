@@ -5,182 +5,254 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\Image\Manipulations;
+use Spatie\MediaLibrary\MediaCollections\File as MediaFile;
 
-class File extends Model
+class File extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes, InteractsWithMedia;
 
     protected $fillable = [
-        'title',
+        'name',
         'description',
-        'original_name',
-        'file_name',
-        'file_path',
-        'mime_type',
-        'extension',
-        'size',
-        'metadata',
         'category_id',
-        'uploaded_by',
-        'is_public',
+        'file_type',
+        'mime_type',
+        'size',
+        'original_name',
+        'extension',
         'is_active',
-        'last_accessed_at',
-        'download_count'
+        'uploaded_by',
+        'metadata'
     ];
 
     protected $casts = [
-        'metadata' => 'array',
-        'is_public' => 'boolean',
         'is_active' => 'boolean',
-        'last_accessed_at' => 'datetime',
         'size' => 'integer',
-        'download_count' => 'integer'
+        'metadata' => 'array',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime'
     ];
 
-    protected $appends = [
-        'file_url',
-        'human_readable_size',
-        'file_type',
-        'is_image'
-    ];
+    // Define media collections
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('files')
+            ->acceptsMimeTypes([
+                // Images
+                'image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml',
+                // Videos
+                'video/mp4', 'video/avi', 'video/mov', 'video/wmv', 'video/webm', 'video/mkv',
+                // Documents
+                'application/pdf', 'text/plain', 'text/csv',
+                // Office
+                'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+                // Archives
+                'application/zip', 'application/x-rar-compressed', 'application/x-7z-compressed',
+                // Audio
+                'audio/mp3', 'audio/wav', 'audio/ogg', 'audio/m4a'
+            ])
+            ->singleFile();
 
-    /**
-     * Get the category that owns the file
-     */
+        $this->addMediaCollection('thumbnails')
+            ->acceptsMimeTypes(['image/jpeg', 'image/png']);
+    }
+
+    // Define media conversions
+    public function registerMediaConversions(Media $media = null): void
+    {
+        // For images - create thumbnails
+        $this->addMediaConversion('thumb')
+            ->fit(Manipulations::FIT_CROP, 150, 150)
+            ->optimize()
+            ->quality(85)
+            ->performOnCollections('files')
+            ->nonQueued();
+
+        $this->addMediaConversion('medium')
+            ->fit(Manipulations::FIT_MAX, 800, 600)
+            ->optimize()
+            ->quality(90)
+            ->performOnCollections('files')
+            ->nonQueued();
+
+        // For videos - extract thumbnail
+        $this->addMediaConversion('video_thumb')
+            ->extractVideoFrameAtSecond(1)
+            ->fit(Manipulations::FIT_CROP, 300, 200)
+            ->performOnCollections('files')
+            ->nonQueued();
+    }
+
+    // Relationships
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
-    /**
-     * Get the admin who uploaded the file
-     */
     public function uploader(): BelongsTo
     {
         return $this->belongsTo(Admin::class, 'uploaded_by');
     }
 
-    /**
-     * Scope for active files
-     */
+    // Scopes
     public function scopeActive($query)
     {
         return $query->where('is_active', true);
     }
 
-    /**
-     * Scope for public files
-     */
-    public function scopePublic($query)
+    public function scopeByType($query, string $type)
     {
-        return $query->where('is_public', true);
+        return $query->where('file_type', $type);
     }
 
-    /**
-     * Scope for specific file types
-     */
-    public function scopeOfType($query, string $type)
+    public function scopeByCategory($query, int $categoryId)
     {
-        $mimeTypes = $this->getMimeTypesByCategory($type);
-        return $query->whereIn('mime_type', $mimeTypes);
+        return $query->where('category_id', $categoryId);
     }
 
-    /**
-     * Scope for search
-     */
-    public function scopeSearch($query, string $search)
+    public function scopeImages($query)
     {
-        return $query->where(function ($query) use ($search) {
-            $query->where('title', 'like', "%{$search}%")
-                  ->orWhere('description', 'like', "%{$search}%")
-                  ->orWhere('original_name', 'like', "%{$search}%");
-        });
+        return $query->where('file_type', 'image');
     }
 
-    /**
-     * Get the file URL
-     */
-    public function getFileUrlAttribute(): string
+    public function scopeVideos($query)
     {
-        return Storage::disk('public')->url($this->file_path);
+        return $query->where('file_type', 'video');
     }
 
-    /**
-     * Get human readable file size
-     */
-    public function getHumanReadableSizeAttribute(): string
+    public function scopeDocuments($query)
+    {
+        return $query->whereIn('file_type', ['document', 'office']);
+    }
+
+    // Accessors
+    public function getFormattedSizeAttribute(): string
     {
         return formatBytes($this->size);
     }
 
-    /**
-     * Get file type category
-     */
-    public function getFileTypeAttribute(): string
+    public function getFileUrlAttribute(): ?string
     {
-        return getFileTypeCategory($this->mime_type);
+        $media = $this->getFirstMedia('files');
+        return $media ? $media->getUrl() : null;
     }
 
-    /**
-     * Check if file is an image
-     */
-    public function getIsImageAttribute(): bool
+    public function getThumbnailUrlAttribute(): ?string
+    {
+        $media = $this->getFirstMedia('files');
+
+        if (!$media) {
+            return null;
+        }
+
+        // For videos, try to get video thumbnail
+        if ($this->file_type === 'video') {
+            try {
+                return $media->getUrl('video_thumb');
+            } catch (\Exception $e) {
+                return null;
+            }
+        }
+
+        // For images, get thumbnail
+        if ($this->file_type === 'image') {
+            try {
+                return $media->getUrl('thumb');
+            } catch (\Exception $e) {
+                return $media->getUrl();
+            }
+        }
+
+        return null;
+    }
+
+    public function getMediumUrlAttribute(): ?string
+    {
+        if ($this->file_type !== 'image') {
+            return $this->file_url;
+        }
+
+        $media = $this->getFirstMedia('files');
+
+        if (!$media) {
+            return null;
+        }
+
+        try {
+            return $media->getUrl('medium');
+        } catch (\Exception $e) {
+            return $media->getUrl();
+        }
+    }
+
+    public function getIconAttribute(): string
+    {
+        return getFileIcon($this->mime_type, $this->extension);
+    }
+
+    public function getColorAttribute(): string
+    {
+        return getFileColor($this->mime_type);
+    }
+
+    // Helper methods for compatibility with different templates
+    public function isImage(): bool
     {
         return $this->file_type === 'image';
     }
 
-    /**
-     * Get file icon based on type
-     */
-    public function getFileIconAttribute(): string
+    public function isVideo(): bool
     {
-        return getFileIcon($this->mime_type);
+        return $this->file_type === 'video';
     }
 
-    /**
-     * Get mime types by category
-     */
-    private function getMimeTypesByCategory(string $category): array
+    public function isDocument(): bool
     {
-        $categories = [
-            'image' => ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml'],
-            'video' => ['video/mp4', 'video/avi', 'video/mov', 'video/wmv', 'video/flv'],
-            'audio' => ['audio/mp3', 'audio/wav', 'audio/ogg', 'audio/m4a'],
-            'document' => ['application/pdf', 'text/plain'],
-            'office' => [
-                'application/msword',
-                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-                'application/vnd.ms-excel',
-                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'application/vnd.ms-powerpoint',
-                'application/vnd.openxmlformats-officedocument.presentationml.presentation'
-            ],
-            'archive' => ['application/zip', 'application/x-rar-compressed', 'application/x-7z-compressed']
-        ];
-
-        return $categories[$category] ?? [];
+        return in_array($this->file_type, ['document', 'office']);
     }
 
-    /**
-     * Increment download count
-     */
-    public function incrementDownloadCount(): void
+    public function canPreview(): bool
     {
-        $this->increment('download_count');
-        $this->update(['last_accessed_at' => now()]);
+        return in_array($this->file_type, ['image', 'video']);
     }
 
-    /**
-     * Delete file from storage when model is deleted
-     */
-    protected static function booted()
+    public function getIcon(): string
     {
+        return getFileIcon($this->mime_type, $this->extension);
+    }
+
+    public function getColorClass(): string
+    {
+        return getFileColor($this->mime_type);
+    }
+
+    // Static methods
+    public static function getFileTypeFromMime(string $mimeType): string
+    {
+        return getFileTypeCategory($mimeType);
+    }
+
+    // Boot method
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($file) {
+            $file->uploaded_by = auth()->guard('admin')->id();
+        });
+
         static::deleting(function ($file) {
-            if (Storage::disk('public')->exists($file->file_path)) {
-                Storage::disk('public')->delete($file->file_path);
-            }
+            // Clean up media files when file is deleted
+            $file->clearMediaCollection('files');
+            $file->clearMediaCollection('thumbnails');
         });
     }
 }

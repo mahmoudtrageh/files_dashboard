@@ -114,15 +114,15 @@ class CategoryManager extends Component
             if ($this->editingCategory) {
                 // Check for circular reference
                 if ($this->parentId && $this->wouldCreateCircularReference($this->editingCategory->id, $this->parentId)) {
-                    $this->addError('parentId', __('Cannot set this category as parent - it would create a circular reference'));
+                    $this->addError('parentId', trans('all.Cannot set this category as parent - it would create a circular reference'));
                     return;
                 }
 
                 $this->categoryService->updateCategory($this->editingCategory, $data);
-                $message = __('Category updated successfully');
+                $message = trans('all.Category updated successfully');
             } else {
                 $this->categoryService->createCategory($data);
-                $message = __('Category created successfully');
+                $message = trans('all.Category created successfully');
             }
 
             $this->hideForm();
@@ -140,7 +140,7 @@ class CategoryManager extends Component
             $this->categoryService->deleteCategory($category);
 
             $this->dispatch('categoryActioned', [
-                'message' => __('Category deleted successfully')
+                'message' => trans('all.Category deleted successfully')
             ]);
 
         } catch (\Exception $e) {
@@ -154,7 +154,7 @@ class CategoryManager extends Component
         $category->update(['is_active' => !$category->is_active]);
 
         $this->dispatch('categoryActioned', [
-            'message' => __('Category status updated')
+            'message' => trans('all.Category status updated')
         ]);
     }
 
@@ -181,21 +181,21 @@ class CategoryManager extends Component
                         }
                     }
                     $this->dispatch('categoryActioned', [
-                        'message' => __(':count categories deleted', ['count' => $count])
+                        'message' => trans('all.:count categories deleted', ['count' => $count])
                     ]);
                     break;
 
                 case 'activate':
                     Category::whereIn('id', $this->selectedCategories)->update(['is_active' => true]);
                     $this->dispatch('categoryActioned', [
-                        'message' => __('Selected categories activated')
+                        'message' => trans('all.Selected categories activated')
                     ]);
                     break;
 
                 case 'deactivate':
                     Category::whereIn('id', $this->selectedCategories)->update(['is_active' => false]);
                     $this->dispatch('categoryActioned', [
-                        'message' => __('Selected categories deactivated')
+                        'message' => trans('all.Selected categories deactivated')
                     ]);
                     break;
             }
@@ -306,34 +306,34 @@ class CategoryManager extends Component
     private function getIconOptions()
     {
         return [
-            'fas fa-folder' => __('Folder'),
-            'fas fa-file' => __('File'),
-            'fas fa-image' => __('Image'),
-            'fas fa-video' => __('Video'),
-            'fas fa-music' => __('Music'),
-            'fas fa-code' => __('Code'),
-            'fas fa-book' => __('Book'),
-            'fas fa-archive' => __('Archive'),
-            'fas fa-star' => __('Star'),
-            'fas fa-heart' => __('Heart'),
-            'fas fa-tag' => __('Tag'),
-            'fas fa-bookmark' => __('Bookmark')
+            'fas fa-folder' => trans('all.Folder'),
+            'fas fa-file' => trans('all.File'),
+            'fas fa-image' => trans('all.Image'),
+            'fas fa-video' => trans('all.Video'),
+            'fas fa-music' => trans('all.Music'),
+            'fas fa-code' => trans('all.Code'),
+            'fas fa-book' => trans('all.Book'),
+            'fas fa-archive' => trans('all.Archive'),
+            'fas fa-star' => trans('all.Star'),
+            'fas fa-heart' => trans('all.Heart'),
+            'fas fa-tag' => trans('all.Tag'),
+            'fas fa-bookmark' => trans('all.Bookmark')
         ];
     }
 
     private function getColorOptions()
     {
         return [
-            '#ef4444' => __('Red'),
-            '#f97316' => __('Orange'),
-            '#eab308' => __('Yellow'),
-            '#22c55e' => __('Green'),
-            '#06b6d4' => __('Cyan'),
-            '#3b82f6' => __('Blue'),
-            '#6366f1' => __('Indigo'),
-            '#8b5cf6' => __('Purple'),
-            '#ec4899' => __('Pink'),
-            '#64748b' => __('Gray')
+            '#ef4444' => trans('all.Red'),
+            '#f97316' => trans('all.Orange'),
+            '#eab308' => trans('all.Yellow'),
+            '#22c55e' => trans('all.Green'),
+            '#06b6d4' => trans('all.Cyan'),
+            '#3b82f6' => trans('all.Blue'),
+            '#6366f1' => trans('all.Indigo'),
+            '#8b5cf6' => trans('all.Purple'),
+            '#ec4899' => trans('all.Pink'),
+            '#64748b' => trans('all.Gray')
         ];
     }
 }

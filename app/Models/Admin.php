@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -48,4 +49,20 @@ class Admin extends Authenticatable implements HasMedia
         'is_super' => 'boolean',
         'status' => 'boolean',
     ];
+
+     /**
+     * Get the files uploaded by this admin
+     */
+    public function uploadedFiles(): HasMany
+    {
+        return $this->hasMany(File::class, 'uploaded_by');
+    }
+
+    /**
+     * Get active files uploaded by this admin
+     */
+    public function activeFiles(): HasMany
+    {
+        return $this->hasMany(File::class, 'uploaded_by')->where('is_active', true);
+    }
 }

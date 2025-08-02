@@ -1,34 +1,34 @@
 @extends('admin.layouts.app')
 
-@section('title', 'عرض الدور: ' . $role->name)
+@section('title', trans('all.view_role') . ': ' . $role->name)
 
 @section('content')
 <div class="py-6">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between">
-            <h1 class="text-2xl font-semibold text-gray-900">عرض الدور: {{ $role->name }}</h1>
+            <h1 class="text-2xl font-semibold text-gray-900">{{ trans('all.view_role') }}: {{ $role->name }}</h1>
             <div class="flex space-x-3 space-x-reverse">
                 <a href="{{ route('admin.roles.edit', $role) }}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
                     <svg class="-ml-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                     </svg>
-                    تعديل
+                    {{ trans('all.edit') }}
                 </a>
                 <a href="{{ route('admin.roles.index') }}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                     <svg class="-ml-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd" />
                     </svg>
-                    العودة إلى قائمة الأدوار
+                    {{ trans('all.back_to_roles_list') }}
                 </a>
             </div>
         </div>
-        
+
         <!-- Role Details -->
         <div class="mt-6 bg-white shadow overflow-hidden sm:rounded-lg">
             <div class="px-4 py-5 sm:px-6 flex items-center justify-between">
                 <div>
-                    <h3 class="text-lg leading-6 font-medium text-gray-900">معلومات الدور</h3>
-                    <p class="mt-1 max-w-2xl text-sm text-gray-500">تفاصيل الدور والصلاحيات المرتبطة به.</p>
+                    <h3 class="text-lg leading-6 font-medium text-gray-900">{{ trans('all.role_information') }}</h3>
+                    <p class="mt-1 max-w-2xl text-sm text-gray-500">{{ trans('all.role_details_description') }}</p>
                 </div>
                 <div class="flex-shrink-0 h-16 w-16">
                     <div class="h-16 w-16 rounded-full bg-indigo-100 flex items-center justify-center">
@@ -38,15 +38,15 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="border-t border-gray-200">
                 <dl>
                     <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">اسم الدور</dt>
+                        <dt class="text-sm font-medium text-gray-500">{{ trans('all.role_name') }}</dt>
                         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ $role->name }}</dd>
                     </div>
                     <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">عدد المستخدمين</dt>
+                        <dt class="text-sm font-medium text-gray-500">{{ trans('all.users_count') }}</dt>
                         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                                 {{ $users->total() }}
@@ -54,24 +54,24 @@
                         </dd>
                     </div>
                     <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">تاريخ الإنشاء</dt>
+                        <dt class="text-sm font-medium text-gray-500">{{ trans('all.created_at') }}</dt>
                         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ $role->created_at->format('Y/m/d H:i:s') }}</dd>
                     </div>
                     <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">آخر تحديث</dt>
+                        <dt class="text-sm font-medium text-gray-500">{{ trans('all.updated_at') }}</dt>
                         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ $role->updated_at->format('Y/m/d H:i:s') }}</dd>
                     </div>
                 </dl>
             </div>
         </div>
-        
+
         <!-- Role Permissions -->
         <div class="mt-6 bg-white shadow overflow-hidden sm:rounded-lg">
             <div class="px-4 py-5 sm:px-6">
-                <h3 class="text-lg leading-6 font-medium text-gray-900">صلاحيات الدور</h3>
-                <p class="mt-1 max-w-2xl text-sm text-gray-500">قائمة بجميع الصلاحيات المرتبطة بهذا الدور.</p>
+                <h3 class="text-lg leading-6 font-medium text-gray-900">{{ trans('all.role_permissions') }}</h3>
+                <p class="mt-1 max-w-2xl text-sm text-gray-500">{{ trans('all.role_permissions_description') }}</p>
             </div>
-            
+
             <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
                 @php
                     // Group permissions by their module/group if they follow a pattern like module.action
@@ -80,7 +80,7 @@
                         return count($parts) > 1 ? $parts[0] : 'general';
                     });
                 @endphp
-                
+
                 @if($role->permissions->count() > 0)
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         @foreach($groupedPermissions as $group => $permissions)
@@ -101,35 +101,35 @@
                     </div>
                 @else
                     <div class="text-sm text-gray-500 text-center py-4">
-                        لا توجد صلاحيات مرتبطة بهذا الدور.
+                        {{ trans('all.no_permissions_assigned') }}
                     </div>
                 @endif
             </div>
         </div>
-        
+
         <!-- Users with this Role -->
         <div class="mt-6 bg-white shadow overflow-hidden sm:rounded-lg">
             <div class="px-4 py-5 sm:px-6">
-                <h3 class="text-lg leading-6 font-medium text-gray-900">المستخدمون بهذا الدور</h3>
-                <p class="mt-1 max-w-2xl text-sm text-gray-500">قائمة بالمستخدمين الذين لديهم هذا الدور.</p>
+                <h3 class="text-lg leading-6 font-medium text-gray-900">{{ trans('all.users_with_role') }}</h3>
+                <p class="mt-1 max-w-2xl text-sm text-gray-500">{{ trans('all.users_with_role_description') }}</p>
             </div>
-            
+
             <div class="border-t border-gray-200">
                 @if($users->count() > 0)
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
                                 <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    المستخدم
+                                    {{ trans('all.user') }}
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    البريد الإلكتروني
+                                    {{ trans('all.email') }}
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    تاريخ الإضافة
+                                    {{ trans('all.created_at') }}
                                 </th>
                                 <th scope="col" class="relative px-6 py-3">
-                                    <span class="sr-only">عرض</span>
+                                    <span class="sr-only">{{ trans('all.view') }}</span>
                                 </th>
                             </tr>
                         </thead>
@@ -174,34 +174,34 @@
                             @endforeach
                         </tbody>
                     </table>
-                    
+
                     <div class="px-4 py-3 bg-gray-50 border-t border-gray-200 sm:px-6">
                         {{ $users->links('pagination::tailwind') }}
                     </div>
                 @else
                     <div class="text-sm text-gray-500 text-center py-8">
-                        لا يوجد مستخدمون بهذا الدور.
+                        {{ trans('all.no_users_with_role') }}
                     </div>
                 @endif
             </div>
         </div>
-        
+
         <!-- Delete Role Form -->
         <div class="mt-6 bg-white shadow overflow-hidden sm:rounded-lg">
             <div class="px-4 py-5 sm:px-6">
-                <h3 class="text-lg leading-6 font-medium text-red-600">خيارات خطرة</h3>
-                <p class="mt-1 max-w-2xl text-sm text-gray-500">هذه العمليات لا يمكن التراجع عنها. يرجى الحذر.</p>
+                <h3 class="text-lg leading-6 font-medium text-red-600">{{ trans('all.danger_zone') }}</h3>
+                <p class="mt-1 max-w-2xl text-sm text-gray-500">{{ trans('all.danger_zone_warning') }}</p>
             </div>
-            
+
             <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
-                <form action="{{ route('admin.roles.destroy', $role) }}" method="POST" onsubmit="return confirm('هل أنت متأكد من حذف هذا الدور؟ سيتم إزالة الدور من جميع المستخدمين المرتبطين به.');">
+                <form action="{{ route('admin.roles.destroy', $role) }}" method="POST" onsubmit="return confirm('{{ trans('all.delete_role_confirmation') }}');">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                         <svg class="-ml-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
                         </svg>
-                        حذف الدور
+                        {{ trans('all.delete_role') }}
                     </button>
                 </form>
             </div>

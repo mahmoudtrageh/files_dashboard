@@ -1,5 +1,7 @@
 <?php
 
+// app/Helpers/helper.php
+
 use App\Models\Admin;
 use App\Models\Setting;
 use Spatie\Permission\Models\Permission;
@@ -7,227 +9,83 @@ use Spatie\Permission\Models\Role;
 use App\Models\File;
 use App\Models\Category;
 
-function getAdminCount()
-{
-    return Admin::count();
-}
+/**
+ * ==============================================
+ * ADMIN & SYSTEM FUNCTIONS
+ * ==============================================
+ */
 
-function getRoleCount()
-{
-    return Role::count();
-}
-
-function getPermissionCount()
-{
-    return Permission::count();
-}
-
-function settings($key)
-{
-    return Setting::select('value')->where('key', $key)->first()->value ?? null;
-}
-
-function getFilesCount()
-{
-    return File::count();
-}
-
-function getCategoriesCount()
-{
-    return Category::count();
-}
-
-function getMediaUrl($key)
-{
-    $setting = Setting::select('value')->where('key', $key)->first();
-
-    if (!$setting) {
-        return null;
-    }
-
-    $media = $setting->getFirstMedia($key);
-    if ($media) {
-        return $media->getUrl();
-    }
-
-    return $setting->value;
-}
-
-// function getMedia($key)
-// {
-//     $setting = Setting::where('key', $key)->first();
-//     return $setting ? $setting->getMedia($key) : collect();
-// }
-
-if (!function_exists('available_locales')) {
-    function available_locales() {
-        return config('app.available_locales', []);
-    }
-}
-
-if (!function_exists('current_locale')) {
-    function current_locale() {
-        return app()->getLocale();
-    }
-}
-
-if (!function_exists('is_rtl')) {
-    function is_rtl($locale = null) {
-        $locale = $locale ?: app()->getLocale();
-        $locales = config('app.available_locales', []);
-
-        return isset($locales[$locale]) && $locales[$locale]['direction'] === 'rtl';
-    }
-}
-
-if (!function_exists('locale_url')) {
-    function locale_url($locale) {
-        return url()->current() . '?' . http_build_query(array_merge(
-            request()->query(),
-            ['lang' => $locale]
-        ));
-    }
-}
-
-if (!function_exists('formatBytes')) {
-    /**
-     * Format bytes to human readable format
-     *
-     * @param int $bytes
-     * @param int $precision
-     * @return string
-     */
-    function formatBytes($bytes, $precision = 2)
+if (!function_exists('getAdminCount')) {
+    function getAdminCount(): int
     {
-        $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
+        return Admin::count();
+    }
+}
 
-        for ($i = 0; $bytes > 1024 && $i < count($units) - 1; $i++) {
-            $bytes /= 1024;
+if (!function_exists('getRoleCount')) {
+    function getRoleCount(): int
+    {
+        return Role::count();
+    }
+}
+
+if (!function_exists('getPermissionCount')) {
+    function getPermissionCount(): int
+    {
+        return Permission::count();
+    }
+}
+
+if (!function_exists('getCategoriesCount')) {
+    function getCategoriesCount(): int
+    {
+        return Category::active()->count();
+    }
+}
+
+/**
+ * ==============================================
+ * SETTINGS & MEDIA FUNCTIONS
+ * ==============================================
+ */
+
+if (!function_exists('settings')) {
+    function settings(string $key, mixed $default = null): mixed
+    {
+        $setting = Setting::select('value')->where('key', $key)->first();
+        return $setting?->value ?? $default;
+    }
+}
+
+if (!function_exists('getMediaUrl')) {
+    function getMediaUrl(string $key): ?string
+    {
+        $setting = Setting::select('value')->where('key', $key)->first();
+
+        if (!$setting) {
+            return null;
         }
 
-        return round($bytes, $precision) . ' ' . $units[$i];
-    }
-}
-
-if (!function_exists('getFileIcon')) {
-    /**
-     * Get file icon based on mime type
-     *
-     * @param string $mimeType
-     * @return string
-     */
-    function getFileIcon($mimeType)
-    {
-        $icons = [
-            // Images
-            'image/jpeg' => 'fas fa-image text-green-500',
-            'image/jpg' => 'fas fa-image text-green-500',
-            'image/png' => 'fas fa-image text-green-500',
-            'image/gif' => 'fas fa-image text-green-500',
-            'image/webp' => 'fas fa-image text-green-500',
-            'image/svg+xml' => 'fas fa-image text-green-500',
-
-            // Videos
-            'video/mp4' => 'fas fa-video text-red-500',
-            'video/avi' => 'fas fa-video text-red-500',
-            'video/mov' => 'fas fa-video text-red-500',
-            'video/wmv' => 'fas fa-video text-red-500',
-            'video/flv' => 'fas fa-video text-red-500',
-            'video/webm' => 'fas fa-video text-red-500',
-
-            // Audio
-            'audio/mp3' => 'fas fa-music text-purple-500',
-            'audio/wav' => 'fas fa-music text-purple-500',
-            'audio/ogg' => 'fas fa-music text-purple-500',
-            'audio/m4a' => 'fas fa-music text-purple-500',
-            'audio/flac' => 'fas fa-music text-purple-500',
-
-            // Documents
-            'application/pdf' => 'fas fa-file-pdf text-red-600',
-            'text/plain' => 'fas fa-file-alt text-gray-500',
-
-            // Office
-            'application/msword' => 'fas fa-file-word text-blue-600',
-            'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'fas fa-file-word text-blue-600',
-            'application/vnd.ms-excel' => 'fas fa-file-excel text-green-600',
-            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'fas fa-file-excel text-green-600',
-            'application/vnd.ms-powerpoint' => 'fas fa-file-powerpoint text-orange-600',
-            'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'fas fa-file-powerpoint text-orange-600',
-
-            // Archives
-            'application/zip' => 'fas fa-file-archive text-yellow-600',
-            'application/x-rar-compressed' => 'fas fa-file-archive text-yellow-600',
-            'application/x-7z-compressed' => 'fas fa-file-archive text-yellow-600',
-            'application/gzip' => 'fas fa-file-archive text-yellow-600',
-            'application/x-tar' => 'fas fa-file-archive text-yellow-600',
-
-            // Code
-            'text/html' => 'fas fa-code text-orange-500',
-            'text/css' => 'fas fa-code text-blue-500',
-            'text/javascript' => 'fas fa-code text-yellow-500',
-            'application/json' => 'fas fa-code text-green-500',
-            'application/xml' => 'fas fa-code text-red-500',
-        ];
-
-        return $icons[$mimeType] ?? 'fas fa-file text-gray-400';
-    }
-}
-
-if (!function_exists('getFileTypeCategory')) {
-    /**
-     * Get file type category
-     *
-     * @param string $mimeType
-     * @return string
-     */
-    function getFileTypeCategory($mimeType)
-    {
-        if (str_starts_with($mimeType, 'image/')) {
-            return 'image';
-        } elseif (str_starts_with($mimeType, 'video/')) {
-            return 'video';
-        } elseif (str_starts_with($mimeType, 'audio/')) {
-            return 'audio';
-        } elseif (in_array($mimeType, ['application/pdf', 'text/plain'])) {
-            return 'document';
-        } elseif (in_array($mimeType, [
-            'application/msword',
-            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-            'application/vnd.ms-excel',
-            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-            'application/vnd.ms-powerpoint',
-            'application/vnd.openxmlformats-officedocument.presentationml.presentation'
-        ])) {
-            return 'office';
-        } elseif (in_array($mimeType, [
-            'application/zip',
-            'application/x-rar-compressed',
-            'application/x-7z-compressed',
-            'application/gzip',
-            'application/x-tar'
-        ])) {
-            return 'archive';
-        } elseif (in_array($mimeType, [
-            'text/html',
-            'text/css',
-            'text/javascript',
-            'application/json',
-            'application/xml'
-        ])) {
-            return 'code';
+        $media = $setting->getFirstMedia($key);
+        if ($media) {
+            return $media->getUrl();
         }
 
-        return 'other';
+        return $setting->value;
     }
 }
+
+/**
+ * ==============================================
+ * LOCALIZATION FUNCTIONS
+ * ==============================================
+ */
 
 if (!function_exists('available_locales')) {
     /**
      * Get available locales
-     *
-     * @return array
      */
-    function available_locales()
+    function available_locales(): array
     {
         return config('app.available_locales', [
             'en' => [
@@ -251,10 +109,8 @@ if (!function_exists('available_locales')) {
 if (!function_exists('current_locale')) {
     /**
      * Get current locale
-     *
-     * @return string
      */
-    function current_locale()
+    function current_locale(): string
     {
         return app()->getLocale();
     }
@@ -263,11 +119,8 @@ if (!function_exists('current_locale')) {
 if (!function_exists('is_rtl')) {
     /**
      * Check if current locale is RTL
-     *
-     * @param string|null $locale
-     * @return bool
      */
-    function is_rtl($locale = null)
+    function is_rtl(?string $locale = null): bool
     {
         $locale = $locale ?: app()->getLocale();
         $locales = available_locales();
@@ -279,11 +132,8 @@ if (!function_exists('is_rtl')) {
 if (!function_exists('locale_url')) {
     /**
      * Generate URL with locale parameter
-     *
-     * @param string $locale
-     * @return string
      */
-    function locale_url($locale)
+    function locale_url(string $locale): string
     {
         return url()->current() . '?' . http_build_query(array_merge(
             request()->query(),
@@ -292,29 +142,19 @@ if (!function_exists('locale_url')) {
     }
 }
 
-if (!function_exists('admin_user')) {
-    /**
-     * Get current authenticated admin user
-     *
-     * @return \App\Models\Admin|null
-     */
-    function admin_user()
-    {
-        return auth()->guard('admin')->user();
-    }
-}
+/**
+ * ==============================================
+ * TEXT & DATE FORMATTING FUNCTIONS
+ * ==============================================
+ */
 
 if (!function_exists('format_date_for_humans')) {
     /**
      * Format date for humans in current locale
-     *
-     * @param \Carbon\Carbon $date
-     * @return string
      */
-    function format_date_for_humans($date)
+    function format_date_for_humans(\Carbon\Carbon $date): string
     {
         if (is_rtl()) {
-            // Arabic date formatting
             return $date->locale('ar')->diffForHumans();
         }
 
@@ -325,18 +165,35 @@ if (!function_exists('format_date_for_humans')) {
 if (!function_exists('truncate_text')) {
     /**
      * Truncate text with proper RTL support
-     *
-     * @param string $text
-     * @param int $limit
-     * @param string $end
-     * @return string
      */
-    function truncate_text($text, $limit = 100, $end = '...')
+    function truncate_text(string $text, int $limit = 100, string $end = '...'): string
     {
         if (mb_strlen($text) <= $limit) {
             return $text;
         }
 
         return mb_substr($text, 0, $limit) . $end;
+    }
+}
+
+if (!function_exists('formatBytes')) {
+    /**
+     * Format bytes to human readable format
+     */
+    function formatBytes(int|float $bytes, int $precision = 2): string
+    {
+        $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
+
+        if ($bytes == 0) {
+            return '0 B';
+        }
+
+        $bytes = max($bytes, 0);
+        $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
+        $pow = min($pow, count($units) - 1);
+
+        $bytes /= pow(1024, $pow);
+
+        return round($bytes, $precision) . ' ' . $units[$pow];
     }
 }

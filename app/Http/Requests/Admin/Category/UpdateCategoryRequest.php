@@ -27,21 +27,18 @@ class UpdateCategoryRequest extends FormRequest
                 'max:255',
                 Rule::unique('categories', 'name')->ignore($this->category->id)
             ],
-            'description' => 'nullable|string|max:1000',
-            'color' => 'required|string|regex:/^#[0-9A-Fa-f]{6}$/',
-            'icon' => 'nullable|string|max:50',
             'parent_id' => [
                 'nullable',
                 'exists:categories,id',
                 function ($attribute, $value, $fail) {
                     // Prevent setting self as parent
                     if ($value == $this->category->id) {
-                        $fail(__('A category cannot be its own parent.'));
+                        $fail(trans('all.A category cannot be its own parent.'));
                     }
 
                     // Prevent circular reference
                     if ($value && $this->wouldCreateCircularReference($this->category->id, $value)) {
-                        $fail(__('This would create a circular reference.'));
+                        $fail(trans('all.This would create a circular reference.'));
                     }
                 }
             ],
@@ -56,13 +53,10 @@ class UpdateCategoryRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name' => __('Category Name'),
-            'description' => __('Description'),
-            'color' => __('Color'),
-            'icon' => __('Icon'),
-            'parent_id' => __('Parent Category'),
-            'is_active' => __('Status'),
-            'sort_order' => __('Sort Order')
+            'name' => trans('all.Category Name'),
+            'parent_id' => trans('all.Parent Category'),
+            'is_active' => trans('all.Status'),
+            'sort_order' => trans('all.Sort Order')
         ];
     }
 
@@ -72,10 +66,9 @@ class UpdateCategoryRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => __('The category name is required.'),
-            'name.unique' => __('A category with this name already exists.'),
-            'color.regex' => __('The color must be a valid hex color code.'),
-            'parent_id.exists' => __('The selected parent category does not exist.')
+            'name.required' => trans('all.The category name is required.'),
+            'name.unique' => trans('all.A category with this name already exists.'),
+            'parent_id.exists' => trans('all.The selected parent category does not exist.')
         ];
     }
 

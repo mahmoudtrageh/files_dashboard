@@ -92,12 +92,6 @@ class CategoryService
      */
     public function deleteCategory(Category $category): bool
     {
-        // Check if category has files
-        if ($category->files()->exists()) {
-            throw new \Exception('Cannot delete category that contains files. Please move or delete files first.');
-        }
-
-        // Move children to parent or make them root categories
         if ($category->children()->exists()) {
             $category->children()->update(['parent_id' => $category->parent_id]);
         }
@@ -115,7 +109,6 @@ class CategoryService
             ->with(['children' => function ($query) {
                 $query->active()->orderBy('sort_order')->orderBy('name');
             }])
-            ->withCount('files')
             ->orderBy('sort_order')
             ->orderBy('name')
             ->get()
@@ -160,15 +153,8 @@ class CategoryService
     {
         return [
             'total_categories' => Category::active()->count(),
-            'root_categories' => Category::active()->root()->count(),
-            'categories_with_files' => Category::has('files')->count(),
-            'empty_categories' => Category::doesntHave('files')->count(),
-            'most_used_categories' => Category::with(['files'])
-                ->withCount('files')
-                ->having('files_count', '>', 0)
-                ->orderBy('files_count', 'desc')
-                ->limit(5)
-                ->get()
+            'root_categories' => Category::active()->root()->count()
+
         ];
     }
 
@@ -265,8 +251,6 @@ class CategoryService
             'slug' => $category->slug,
             'color' => $category->color,
             'icon' => $category->icon,
-            'files_count' => $category->files_count,
-            'total_files_count' => $category->total_files_count,
             'has_children' => $category->children->isNotEmpty(),
             'children' => $category->children->map(function ($child) {
                 return $this->formatCategoryForTree($child);
